@@ -11,3 +11,4 @@ function add(x, y) {
 // 暴露语法：exports 对象 
 // 暴露出去是一个对象，对象里面有add方法
 exports.add = add;
+// exports = add; // 不ok
