@@ -19,5 +19,8 @@
  
   4. npm remove / r xxx 删除xxx包  
 
-*/  
-const $ = require('jquery');
+  5. 配置淘宝镜像（只要做一次）
+    npm config set registry http://registry.npm.taobao.org/ 
+*/
+
+const $ = require("jquery");
