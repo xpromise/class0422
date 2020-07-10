@@ -1,0 +1,19 @@
+{
+  "name": "day02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "02.nodejs中函数.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.5.1",
+    "lodash": "^4.17.19"
+  },
+  "devDependencies": {
+    "bootstrap": "^4.5.0"
+  }
+}

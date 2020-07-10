@@ -28,7 +28,7 @@ console.log(buf4.toString()); // 尚硅谷
  
   00 - ff
   0 - 255
-  0000000 - 11111111
+  00000000 - 11111111
 
   1 byte = 8 bit 
   1 kb = 1024 byte
