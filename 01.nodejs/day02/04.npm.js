@@ -16,6 +16,9 @@
     npm i        下载所有依赖包
     npm i xxx -g  全局下载包，作为指令使用
       注意不是通过require使用，而是作为指令使用
+
+      生产依赖 dependencies     运行时依赖
+      开发依赖 devDependencies  构建时依赖
  
   4. npm remove / r xxx 删除xxx包  
 
