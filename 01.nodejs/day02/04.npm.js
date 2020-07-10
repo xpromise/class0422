@@ -13,6 +13,10 @@
 
     npm i xxx -S 下载包并添加到生产依赖
     npm i xxx -D 下载包并添加到开发依赖
+    npm i xxx@x.y.z 下载指定版本
+      x 大版本
+      y 中版本
+      z 小版本
     npm i        下载所有依赖包
     npm i xxx -g  全局下载包，作为指令使用
       注意不是通过require使用，而是作为指令使用
