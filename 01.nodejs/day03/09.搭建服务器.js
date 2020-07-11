@@ -7,7 +7,7 @@
       http://localhost:9527
       http://127.0.0.1:9527
     
-      协议://域名（ip地址）:端口号
+      协议://域名（ip地址）:端号
 
       https://www.baidu.com:443
       http://www.atguigu.com:80
