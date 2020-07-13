@@ -46,13 +46,18 @@ const server = http.createServer(async (req, res) => {
     const filePath = path.resolve(__dirname, "01.server.js");
     // 读取文件
     const data = await readFile(filePath);
+    // 操作成功，返回成功的响应
     // 设置响应头
     res.setHeader("Content-Type", "application/javascript;charset=utf-8");
     // 返回响应
     res.end(data);
   } catch (e) {
+    // 操作失败，返回失败的响应
+    // 设置响应状态码（默认为200）
     res.statusCode = 404;
+    // 设置响应头
     res.setHeader("Content-Type", "text/plain;charset=utf-8");
+    // 返回响应
     res.end("文件找不到 404");
   }
 
