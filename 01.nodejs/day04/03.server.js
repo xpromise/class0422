@@ -10,40 +10,36 @@ const util = require("util");
     如果是文件夹，返回文件夹下面的所有文件列表
 */
 
-/**
- * 读取文件方法
- * @param {String} filePath 文件路径
- */
-/* function readFile(filePath) {
-  return new Promise((resolve, reject) => {
-    // 执行异步操作
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        reject(err);
-        // 失败响应
-        return;
-      }
-      // 成功
-      resolve(data);
-    });
-  })
-} */
-
-// 将fs.readFile方法装换成基于promise的函数
-const readFile = util.promisify(fs.readFile);
+// 将fs.readdir方法装换成基于promise的函数
+const readdir = util.promisify(fs.readdir);
 
 // 创建服务
 const server = http.createServer(async (req, res) => {
   try {
     // 文件路径
-    const filePath = path.resolve(__dirname, "01.server.js");
-    // 读取文件
-    const data = await readFile(filePath);
+    const filePath = path.resolve(__dirname);
+    // 读取文件夹
+    const files = await readdir(filePath);
+
+    // console.log(files); // [ '01.server.js', '02.server.js', '03.server.js' ]
+    /* let lis = "";
+    files.forEach((file) => {
+      lis += `<li>${file}</li>`;
+    }); */
+    const lis = files.reduce((p, c) => {
+      p += `<li>${c}</li>`;
+      return p;
+    }, '');
+
     // 操作成功，返回成功的响应
     // 设置响应头
-    res.setHeader("Content-Type", "application/javascript;charset=utf-8");
+    res.setHeader("Content-Type", "text/html;charset=utf-8");
     // 返回响应
-    res.end(data);
+    res.end(`
+      <ul>
+        ${lis}
+      </ul>
+    `);
   } catch (e) {
     // 操作失败，返回失败的响应
     // 设置响应状态码（默认为200）
