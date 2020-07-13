@@ -19,8 +19,8 @@ const stat = util.promisify(fs.stat);
 const server = http.createServer(async (req, res) => {
   try {
     // 获取请求路径
-    // decodeURI(req.url)目的将经过url编码的中文转换中文
-    const url = decodeURI(req.url); // / 或 /01.server.js
+    // decodeURI(req.url)目的将经过url编码的中文转换成中文
+    const url = decodeURI(req.url); 
     // 文件绝对路径
     const filePath = path.resolve(__dirname, url.slice(1));
     // 如果文件/文件夹存在，返回相应的信息

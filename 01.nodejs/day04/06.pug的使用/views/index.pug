@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+  //- 通过缩进来控制从属关系
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title pug的初体验
+  body
+    div#box.container
+      span 这是一段文字
+    
+    if isVisible
+      p 显示
+    else 
+      p 隐藏
+
+    ul
+      each item, index in persons
+        li #{item.name} - #{item.age} - #{index}
