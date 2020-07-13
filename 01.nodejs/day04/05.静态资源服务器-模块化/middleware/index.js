@@ -1,22 +1,17 @@
-// 引入http模块
-const http = require("http");
-const fs = require("fs");
+/*
+  中间件函数: 处理请求的核心逻辑函数
+*/
 const path = require("path");
+const fs = require("fs");
 // utils中放置工具函数
 const util = require("util");
-/*
-  需求：
-    http://localhost:9527/ --> 返回day04文件夹下面所有文件
-    http://localhost:9527/01.server.js --> 返回01.server.js文件
-*/
 
 // 将fs.xxx方法装换成基于promise的函数
 const readdir = util.promisify(fs.readdir);
 const readFile = util.promisify(fs.readFile);
 const stat = util.promisify(fs.stat);
 
-// 创建服务
-const server = http.createServer(async (req, res) => {
+module.exports = async (req, res) => {
   try {
     // 获取请求路径
     // decodeURI(req.url)目的将经过url编码的中文转换中文
@@ -33,9 +28,6 @@ const server = http.createServer(async (req, res) => {
       const files = await readdir(filePath);
       // 拼接成字符串
       const lis = files.reduce((p, c) => {
-        // c 就是文件名   01.server.js
-        // 访问文件路径： http://localhost:9527/01.server.js
-        // 简写：/01.server.js
         p += `<li><a href="/${c}">${c}</a></li>`;
         return p;
       }, "");
@@ -66,19 +58,4 @@ const server = http.createServer(async (req, res) => {
     // 返回响应
     res.end("文件或文件夹找不到");
   }
-});
-
-// 监听端口号 启动服务
-const port = 9527;
-const host = "localhost";
-
-server.listen(port, host, (err) => {
-  if (err) {
-    console.log("服务器启动失败了", err);
-    return;
-  }
-  console.log(`
-    服务器启动成功了 
-    服务器访问地址：http://${host}:${port}
-  `);
-});
+}
