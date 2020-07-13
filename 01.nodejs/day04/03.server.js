@@ -5,17 +5,9 @@ const path = require("path");
 // utils中放置工具函数
 const util = require("util");
 /*
-  问题1：每次修改服务器代码，都需要重启服务器才能生效，很麻烦
-  解决：
-    npm i nodemon -g
-    过去 node xxx
-    现在 nodemon xxx
-      nodemon会监视xxx文件，一旦xxx文件发生变化，会自动重启服务器
-
-  问题2：将异步代码改造成 promise+async 的方式
-    为了复用定义函数
-
-    util.promisify 将普通异步函数转换成基于promise对象的函数
+  需求：
+    如果是文件，返回具体文件内容
+    如果是文件夹，返回文件夹下面的所有文件列表
 */
 
 /**

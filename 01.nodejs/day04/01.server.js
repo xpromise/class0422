@@ -12,7 +12,7 @@ const path = require("path");
 */
 
 // 创建服务
-const server = http.createServer(async (req, res) => {
+const server = http.createServer((req, res) => {
   // 文件路径
   const filePath = path.resolve(__dirname, "01.server.js");
   // 读取文件
@@ -20,6 +20,7 @@ const server = http.createServer(async (req, res) => {
     if (err) {
       console.log("文件读取失败", err);
       // 失败响应
+      // 设置响应状态码（默认200）
       res.statusCode = 404;
       res.setHeader("Content-Type", "text/plain;charset=utf-8");
       res.end("文件找不到 404");
