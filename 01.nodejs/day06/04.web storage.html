@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>web storage页面</h1>
+    <button id="btn">按钮</button>
+    <script>
+      /*
+        WebStorage 浏览器本地离线存储方案
+          localStorage 永久存储
+          sessionStorage 会话（临时）存储
+            xxxStorage.setItem(key, value) 存储数据的方法
+            xxxStorage.getItem(key) 读取数据的方法
+            xxxStorage.removeItem(key) 删除数据的方法
+            xxxStorage.clear() 清空所有数据的方法
+
+          只能存储字符串数据
+          4mb左右
+
+          storage事件：用来跨页面通信
+            当别的页面存储东西发生变化时触发的事件
+            只能由localStorage触发
+
+        indexDB
+        webSQL 
+          优点：读写速度更快，存储容量更大
+          缺点：兼容性教差
+
+          兼容性的库 localForage
+          
+      */
+      // const person = { name: "jack", age: 18 };
+
+      // sessionStorage.setItem("person", JSON.stringify(person));
+
+      // localStorage.setItem("person1", JSON.stringify(person));
+      // localStorage.setItem("person2", JSON.stringify(person));
+
+      // const person = localStorage.getItem("person");
+      // console.log(JSON.parse(person));
+
+      // localStorage.removeItem("person");
+
+      // localStorage.clear();
+
+      let num = 1;
+      btn.onclick = function () {
+        localStorage.setItem("num", 2);
+      };
+    </script>
+  </body>
+</html>
