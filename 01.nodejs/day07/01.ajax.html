@@ -28,8 +28,7 @@
             xhr.status 响应状态码
             xhr.responseText 响应体数据
         */
-          // console.log(xhr.readyState);
-          if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300 ) {
+          if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
             // 成功的响应
             console.log(xhr.responseText); // 响应成功的数据
           }
@@ -40,10 +39,26 @@
           // }
         };
         // 3. 设置请求信息
-        xhr.open("GET", "http://localhost:9527", true);
+        /*
+          xhr.open(请求方式, 请求地址, 是否是异步请求)
+          xhr.setRequestHeader(key, value)
+
+          GET请求的问题：
+            IE浏览器会自动强制缓存GET请求，导致后面的请求结果一致，不能得到最新的数据
+          解决：
+            让每次请求都不一样，就不会走缓存
+            请求参数加上时间戳/随机数
+        */
+        xhr.open(
+          "GET",
+          "http://localhost:9527?name=jack&age=25&date=" + Date.now(),
+          true
+        );
         xhr.setRequestHeader("aaa", "111");
         // 4. 发送请求
         xhr.send();
+
+        console.log("全部代码执行完了");
       };
     </script>
   </body>

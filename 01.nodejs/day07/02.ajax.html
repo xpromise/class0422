@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ajax</title>
+  </head>
+  <body>
+    <button id="btn">点击按钮发送ajax请求</button>
+    <script>
+      document.getElementById("btn").onclick = function () {
+        // 发送ajax请求
+        // 1. 创建XHR对象
+        const xhr = new XMLHttpRequest();
+        // 2. 绑定事件监听：监听请求的变化，从而知道响应是否回来了
+        xhr.onreadystatechange = function () {
+          // 当 readyState 发生变化时触发的事件
+          if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
+            // 成功的响应
+            console.log(xhr.responseText); // 响应成功的数据
+          }
+        };
+        // 3. 设置请求信息
+        /*
+          常见的POST请求，请求参数类型：
+            1. form表单提交方式
+              类型: content-type application/x-www-form-urlencoded
+              数据：name=jack&age=18
+            2. json方式（最常用）
+              类型: content-type application/json
+              数据：'{"name": "jack", "age": 18}'
+        */
+        xhr.open("POST", "http://localhost:9527");
+        // xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("content-type", "application/json");
+        // 4. 发送请求
+        const person = {
+          name: 'jack',
+          age: 20
+        }
+        xhr.send(JSON.stringify(person));
+
+        console.log("全部代码执行完了");
+      };
+    </script>
+  </body>
+</html>
