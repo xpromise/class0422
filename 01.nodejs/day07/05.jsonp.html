@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jsonp</title>
+</head>
+<body>
+  <button id="btn">点击发送请求</button>
+  <script>
+    /*
+      1. jsonp方案
+        利用script天然跨域的特性进行跨域
+        特点：
+          1. 只能支持GET请求
+          2. 兼容性好
+    */
+    document.getElementById('btn').onclick = function () {
+      // 1. 创建script标签
+      const script = document.createElement('script');
+      // 2. 设置回调函数：script标签请求回来数据调用
+      window.getData = function (data) {
+        console.log(data);
+      }
+      // 3. 设置src属性
+      script.src = 'http://localhost:9527?callback=getData';
+      // 4. 添加到页面中才会生效
+      document.body.appendChild(script);
+    }
+  </script>
+</body>
+</html>

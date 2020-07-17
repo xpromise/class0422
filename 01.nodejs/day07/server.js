@@ -12,8 +12,24 @@ http
     }
 
     if (req.method === "GET") {
-      console.log(req.url); // 请求的查询字符串参数 /?name=jack&age=18
-      res.end("success4444~");
+      // console.log(req.url); // 请求的查询字符串参数 /?name=jack&age=18
+      // res.end("success4444~");
+      const { callback } = req.url
+        .split("?")[1]
+        .split("&")
+        .reduce((p, c) => {
+          const [key, val] = c.split("=");
+          p[key] = val;
+          return p;
+        }, {});
+
+        const person = {
+          name: 'jack',
+          age: 18
+        }
+        res.setHeader('content-type', 'applicaion/javascript');
+        // getData(JSON.stringify(person))
+        res.end(`${callback}(${JSON.stringify(person)})`);
     }
 
     if (req.method === "POST") {
