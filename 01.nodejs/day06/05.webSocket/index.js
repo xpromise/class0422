@@ -30,4 +30,4 @@ io.on("connect", (socket) => {
 });
 
 // 启动服务
-server.listen(3000);
+server.listen(3000, 'localhost');
