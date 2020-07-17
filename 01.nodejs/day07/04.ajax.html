@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ajax</title>
+  </head>
+  <body>
+    <button id="btn">点击发送ajax请求</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script>
+      $("#btn").click(function () {
+        // 发送ajax请求
+        /* const promise = axios({
+          url: 'http://localhost:9527',
+          method: 'GET',
+          params: { // GET请求查询字符串参数
+            name: 'jack',
+            age: 18
+          }
+        }) */
+
+        // axios POST请求默认是application/json
+        /* const promise = axios({
+          url: 'http://localhost:9527',
+          method: 'POST',
+          data: { 
+            name: 'jack',
+            age: 18
+          }
+        }) */
+
+        // 注意：GET和POST请求的参数
+        /* const promise = axios.get("http://localhost:9527", {
+          params: { name: "jack", age: 18 },
+        }); */
+
+        const promise = axios.post("http://localhost:9527", {
+          name: "jack",
+          age: 18,
+        });
+
+        promise
+          .then((result) => {
+            console.log(result); // 整体对象
+            console.log(result.data); // 响应具体数据
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    </script>
+  </body>
+</html>

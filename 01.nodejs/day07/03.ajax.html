@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ajax</title>
+  </head>
+  <body>
+    <button id="btn">点击发送ajax请求</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      $("#btn").click(function () {
+        // 发送ajax请求
+        /* $.ajax({
+          url: "http://localhost:9527", // 请求地址
+          // method: 'GET', // 请求方式
+          method: "POST", // 请求方式
+          // data: { // 请求参数
+          //   name: 'jack',
+          //   age: 18
+          // },
+          data: JSON.stringify({
+            name: "jack",
+            age: 18,
+          }),
+          headers: {
+            // 默认POST请求的content-type值为'application/x-www-form-urlencoded'
+            // 请求头
+            // 'content-type': 'application/x-www-form-urlencoded'
+            "content-type": "application/json",
+          },
+          success(data) {
+            // 成功响应
+            console.log(data);
+          },
+          error(err) {
+            // 失败响应
+            console.log(err);
+          },
+        }); */
+
+        /* $.get(
+          "http://localhost:9527",
+          {
+            name: "jack",
+            age: 18,
+          },
+          (data) => {
+            console.log(data);
+          }
+        ); */
+
+        $.post(
+          "http://localhost:9527",
+          {
+            name: "jack",
+            age: 18,
+          },
+          (data) => {
+            console.log(data);
+          }
+        );
+      });
+    </script>
+  </body>
+</html>
