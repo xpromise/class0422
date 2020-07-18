@@ -28,7 +28,7 @@ function MyPromise(exector) {
       // 判断_this._callback有没有onResolved这个属性，如果存在，就执行_this._callback.onResolved()
       // 如果不存在后面就不执行了
       // _this._callback?.onResolved(); // ES11
-    });
+    })
   }
 
   // 将promise实例对象的状态改成rejected
@@ -39,7 +39,7 @@ function MyPromise(exector) {
     // 异步调用成功回调函数
     setTimeout(() => {
       _this._callback.onRejected && _this._callback.onRejected(reason);
-    });
+    })
   }
 
   // 同步调用
@@ -47,36 +47,11 @@ function MyPromise(exector) {
 }
 
 MyPromise.prototype.then = function (onResolved, onRejected) {
-  var _this = this;
-  // 返回的新promise对象的状态看 onResolved / onRejected 函数的执行结果
+  // 给容器添加将来需要调用的回调函数
+  this._callback.onResolved = onResolved;
+  this._callback.onRejected = onRejected;
+
   return new MyPromise(function (resolve, reject) {
-    // 给容器添加将来需要调用的回调函数
-    _this._callback.onResolved = function () {
-      try {
-        // 调用成功回调函数，得到结果值
-        var result = onResolved();
-        // 判断result是否是promise对象
-        // 因为只有promise才有then方法，promise.__proto__才会等于MyPromise.prototype
-        if (result instanceof MyPromise) {
-          // 说明result是promise
-          // result的状态是啥，新promise对象的状态就是啥
-          // 最终目的：result的状态变成功，新promise对象就成功，反之失败
-          /* result.then(function () {
-          resolve();
-        }, function () {
-          reject();
-        }) */
-          result.then(resolve, reject);
-        } else {
-          // 说明result不是promise
-          // 返回的新promise对象的状态就是resolved
-          resolve();
-        }
-      } catch (e) {
-        // 函数出错了
-        reject();
-      }
-    };
-    _this._callback.onRejected = onRejected;
+    
   });
 };
