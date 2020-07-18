@@ -18,6 +18,8 @@
         分别暴露 export 完整定义
           能够暴露多个内容
           结论：如果模块内很多代码都需要暴露出去，就用分别暴露
+       
+      as 用来重命名    
     
       默认情况下：ES6模块化在浏览器是不识别的，需要编译
         1. babel
@@ -45,11 +47,14 @@
 
 */
 // 引入默认暴露的内容，直接写暴露的内容名称
-import add from './add';
+import add from "./add";
 // 引入分别/统一暴露的内容，必须通过解构赋值去使用
-import { name, age } from './person';
-import { count, mul } from './math';
+import { name, age } from "./person"; // 引入部分
+// import * as person from "./person"; // 引入所有
+
+// 引入暴露的name重命名为mathName
+import { count, mul, name as mathName } from "./math";
 
 console.log(add);
-console.log(name, age);
-console.log(count, mul);
+console.log(name, age );
+console.log(count, mul, mathName);

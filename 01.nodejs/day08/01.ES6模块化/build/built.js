@@ -63,16 +63,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
           运行  
             npx babel js -d build
               将js目录下所有文件进行编译，编译后将文件输出到build目录
-
+              npx能够运行本地安装的包
+              
         2. browserify
           将Commonjs模块化编译成浏览器能识别的语法
+          browserify build/index.js -o build/built.js
 
 */
 // 引入默认暴露的内容，直接写暴露的内容名称
 // 引入分别/统一暴露的内容，必须通过解构赋值去使用
+// 引入部分
+// import * as person from "./person"; // 引入所有
+// 引入暴露的name重命名为mathName
 console.log(_add["default"]);
 console.log(_person.name, _person.age);
-console.log(_math.count, _math.mul);
+console.log(_math.count, _math.mul, _math.name);
 },{"./add":1,"./math":3,"./person":4}],3:[function(require,module,exports){
 "use strict";
 
@@ -81,6 +86,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.count = count;
 exports.mul = mul;
+exports.name = void 0;
 
 function count(x, y) {
   return x - y;
@@ -88,7 +94,11 @@ function count(x, y) {
 
 function mul(x, y) {
   return x * y;
-} // 统一暴露：后面跟一个对象，对象里面放置暴露的内容
+}
+
+var name = 'rose'; // 统一暴露：后面跟一个对象，对象里面放置暴露的内容
+
+exports.name = name;
 },{}],4:[function(require,module,exports){
 "use strict";
 
