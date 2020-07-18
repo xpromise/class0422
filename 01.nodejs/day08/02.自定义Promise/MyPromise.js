@@ -87,7 +87,7 @@ MyPromise.prototype.then = function (onResolved, onRejected) {
         reject(e);
       }
     };
-
+    
     _this._callback.onRejected = function (value) {
       try {
         var result = onRejected(value);
