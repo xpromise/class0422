@@ -9,10 +9,23 @@
     <script src="./MyPromise.js"></script>
     <script>
       const promise = new MyPromise((resolve, reject) => {
-        reject();
-        resolve();
+        console.log(000);
+        resolve(123);
       });
-      console.log(promise);
+      promise.then(
+        (value) => {
+          // 当promise对象变成resolved状态时，会异步调用当前函数
+          // 成功的回调函数
+          console.log(111, value);
+        },
+        (reason) => {
+          // 当promise对象变成rejected状态时，会异步调用当前函数
+          // 失败的回调函数
+          console.log(222, reason);
+        }
+      ).then()
+
+      console.log("全局代码执行完了");
     </script>
   </body>
 </html>

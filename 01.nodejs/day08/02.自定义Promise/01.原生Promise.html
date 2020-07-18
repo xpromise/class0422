@@ -21,6 +21,14 @@
     const promise = new Promise((resolve, reject) => {
       // 执行异步代码
       resolve();
+    });
+
+    promise.then(() => {
+      // 当promise对象变成resolved状态时，会异步调用当前函数
+      // 成功的回调函数
+    }, () => {
+      // 当promise对象变成rejected状态时，会异步调用当前函数
+      // 失败的回调函数
     })
 
   </script>
