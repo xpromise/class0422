@@ -129,7 +129,6 @@ MyPromise.prototype.catch = function (onRejected) {
   return this.then(undefined, onRejected);
 };
 
-
 MyPromise.prototype.finally = function (onResolved) {
   // 如果上一个promise状态是失败的，返回值一定是失败的promise
   // 如果上一个promise状态是成功的，返回值promise的状态就看 onResolved 执行结果
@@ -138,6 +137,7 @@ MyPromise.prototype.finally = function (onResolved) {
   return this.then(
     // onResolved,
     function (value) {
+      // 调用不传参数，为了让finally回调没有参数
       var result = onResolved();
       if (result instanceof MyPromise) {
         return result.then(function () {
@@ -150,6 +150,7 @@ MyPromise.prototype.finally = function (onResolved) {
     function (reason) {
       /*
         reason是上一个promise对象失败的原因
+
         如果上一个promise状态是失败的，返回值一定是失败的promise
           如果当前 onResolved 也失败了，结果值就是 onResolved 失败原因
             执行函数报错，最终结果值就是报错的原因
@@ -174,8 +175,8 @@ MyPromise.prototype.finally = function (onResolved) {
 MyPromise.reject = function (reason) {
   return new MyPromise((resolve, reject) => {
     reject(reason);
-  })
-} 
+  });
+};
 
 // 不一定生成成功Promise对象
 // 也有可能是失败的Promise对象
@@ -186,13 +187,70 @@ MyPromise.resolve = function (value) {
     } else {
       resolve(value);
     }
-  })
-} 
+  });
+};
 
-MyPromise.prototype.all = function () {
+MyPromise.all = function (promises) {
+  return new MyPromise(function (resolve, reject) {
+    // 所有promise的长度
+    const allPromiseCount = promises.length;
+    // 成功的promise对象的数量
+    let resolvedPromiseCount = 0;
 
-}
+    const resultArr = [];
+    // 遍历promise
+    promises.forEach((promise, index) => {
+      // 判断promise对象的状态
+      promise.then(
+        function (value) {
+          resolvedPromiseCount++;
+          // resultArr.push(value); // 谁先执行完，谁先进来
+          resultArr[index] = value; // 根据位置来添加结果值
+          if (resolvedPromiseCount === allPromiseCount) {
+            // 所有promise都成功了
+            resolve(resultArr);
+          }
+        },
+        function (reason) {
+          // 只要有一个promise对象失败，就失败
+          reject(reason);
+        }
+      );
+    });
+  });
+};
 
-MyPromise.prototype.allSettled = function () {
-  
-}
+// [{status: 'resolved', value: 111}, {status: 'rejected', reason: 222}]
+MyPromise.allSettled = function (promises) {
+  return new MyPromise(function (resolve, reject) {
+    // 所有promise的长度
+    const allPromiseCount = promises.length;
+    // 完成的promise对象的数量
+    let completedPromiseCount = 0;
+
+    const resultArr = [];
+
+    promises.forEach(function (promise, index) {
+      promise.then(function (value) {
+        completedPromiseCount++;
+        resultArr[index] = {
+          status: 'resolved',
+          value
+        }
+        if (completedPromiseCount === allPromiseCount) {
+          resolve(resultArr)
+        }
+      }, function (reason) {
+        completedPromiseCount++;
+        resultArr[index] = {
+          status: 'rejected',
+          reason
+        }
+        if (completedPromiseCount === allPromiseCount) {
+          resolve(resultArr)
+        }
+      })
+    })
+  });
+};
+

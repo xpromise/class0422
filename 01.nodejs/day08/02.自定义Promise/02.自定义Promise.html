@@ -8,7 +8,32 @@
   <body>
     <script src="./MyPromise.js"></script>
     <script>
-      const promise = new MyPromise((resolve, reject) => {
+      const promise1 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(111);
+        }, 3000);
+      });
+      const promise2 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          reject(222);
+        }, 2000);
+      });
+
+      const promise3 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(333);
+        }, 1000);
+      });
+
+      MyPromise.allSettled([promise1, promise2, promise3])
+        .then((value) => {
+          console.log("value", value);
+        })
+        .catch((reason) => {
+          console.log("reason", reason);
+        });
+
+      /* const promise = new MyPromise((resolve, reject) => {
         reject(123);
       });
 
@@ -29,7 +54,7 @@
         })
         .catch((reason) => {
           console.log(555, reason);
-        });
+        }); */
 
       /* promise
         .then((value) => {
