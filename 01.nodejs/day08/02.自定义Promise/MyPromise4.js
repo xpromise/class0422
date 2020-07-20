@@ -55,26 +55,6 @@ function MyPromise(exector) {
 
 MyPromise.prototype.then = function (onResolved, onRejected) {
   var _this = this; // promise1
-
-  // 当使用catch方法时，不传成功的回调函数（undefined），需要给一个默认的成功回调函数
-  // 来保证promise成功的状态和结果值能往下传递
-  onResolved =
-    typeof onResolved !== "function"
-      ? function (value) {
-          return value;
-        }
-      : onResolved;
-
-  // 当使用then方法只传一个函数时，不传失败的回调函数（undefined），需要给一个默认的成功回调函数
-  // 来保证promise失败的状态和结果值能往下传递    
-  onRejected =
-    typeof onRejected !== "function"
-      ? function (reason) {
-          // throw关键字不能和return一起使用
-          throw reason;
-        }
-      : onRejected;
-
   // 返回的新promise2对象的状态看 onResolved / onRejected 函数的执行结果
   return new MyPromise(function (resolve, reject) {
     // 给容器添加将来需要调用的回调函数
@@ -107,7 +87,7 @@ MyPromise.prototype.then = function (onResolved, onRejected) {
         reject(e);
       }
     };
-
+    
     _this._callback.onRejected = function (reason) {
       try {
         var result = onRejected(reason);
@@ -121,10 +101,4 @@ MyPromise.prototype.then = function (onResolved, onRejected) {
       }
     };
   });
-};
-
-MyPromise.prototype.catch = function (onRejected) {
-  // const promise = this.then(undefined, onRejected);
-  // return promise;
-  return this.then(undefined, onRejected);
 };

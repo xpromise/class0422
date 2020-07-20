@@ -14,6 +14,27 @@
       });
 
       promise
+        .then((value) => {
+          console.log(111, value);
+          // return 123
+          // return new Promise(() => {});
+          // console.log(aaa);
+          return 456;
+        })
+        .catch((reason) => {
+          console.log(222, reason);
+          // return 123
+          // return new Promise(() => {});
+          // console.log(aaa);
+        })
+        .then((value) => {
+          console.log(333, value);
+        })
+        .catch((reason) => {
+          console.log(444, reason);
+        });
+
+      /* promise
         .then(
           (value) => {
             // 当promise对象变成resolved状态时，会异步调用当前函数
@@ -44,7 +65,7 @@
           }
         );
 
-      console.log("全局代码执行完了");
+      console.log("全局代码执行完了"); */
     </script>
   </body>
 </html>
