@@ -4,7 +4,7 @@
     2. 有什么用
 */
 
-function MyPromise(exector) {
+function MyPromise(executor) {
   var _this = this;
   // 因为将来new MyPromise() 所以MyPromise函数的this指向实例对象
   // 定义实例对象promise的状态
@@ -50,7 +50,7 @@ function MyPromise(exector) {
   }
 
   // 同步调用
-  exector(resolve, reject);
+  executor(resolve, reject);
 }
 
 MyPromise.prototype.then = function (onResolved, onRejected) {
@@ -66,7 +66,7 @@ MyPromise.prototype.then = function (onResolved, onRejected) {
       : onResolved;
 
   // 当使用then方法只传一个函数时，不传失败的回调函数（undefined），需要给一个默认的成功回调函数
-  // 来保证promise失败的状态和结果值能往下传递    
+  // 来保证promise失败的状态和结果值能往下传递
   onRejected =
     typeof onRejected !== "function"
       ? function (reason) {
@@ -128,3 +128,71 @@ MyPromise.prototype.catch = function (onRejected) {
   // return promise;
   return this.then(undefined, onRejected);
 };
+
+
+MyPromise.prototype.finally = function (onResolved) {
+  // 如果上一个promise状态是失败的，返回值一定是失败的promise
+  // 如果上一个promise状态是成功的，返回值promise的状态就看 onResolved 执行结果
+
+  // this指向上一个promise
+  return this.then(
+    // onResolved,
+    function (value) {
+      var result = onResolved();
+      if (result instanceof MyPromise) {
+        return result.then(function () {
+          return value;
+        });
+      } else {
+        return value;
+      }
+    },
+    function (reason) {
+      /*
+        reason是上一个promise对象失败的原因
+        如果上一个promise状态是失败的，返回值一定是失败的promise
+          如果当前 onResolved 也失败了，结果值就是 onResolved 失败原因
+            执行函数报错，最终结果值就是报错的原因
+            返回值是一个失败的promise，最终结果值就是失败的promise内部的结果值
+          如果当前 onResolved 没有失败，结果值就是 上一个promise失败原因
+            执行函数返回值是一个普通值，最终结果值就是上一个promise失败原因
+            返回值是一个成功的promise，最终结果值就是上一个promise失败原因
+      */
+      var result = onResolved();
+      if (result instanceof MyPromise) {
+        return result.then(function () {
+          throw reason;
+        });
+      } else {
+        throw reason;
+      }
+    }
+  );
+};
+
+// 一定生成一个失败的Promise对象
+MyPromise.reject = function (reason) {
+  return new MyPromise((resolve, reject) => {
+    reject(reason);
+  })
+} 
+
+// 不一定生成成功Promise对象
+// 也有可能是失败的Promise对象
+MyPromise.resolve = function (value) {
+  return new MyPromise((resolve, reject) => {
+    if (value instanceof MyPromise) {
+      value.then(resolve, reject);
+    } else {
+      resolve(value);
+    }
+  })
+} 
+
+MyPromise.prototype.all = function () {
+
+}
+
+MyPromise.prototype.allSettled = function () {
+  
+}

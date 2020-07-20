@@ -9,11 +9,29 @@
     <script src="./MyPromise.js"></script>
     <script>
       const promise = new MyPromise((resolve, reject) => {
-        console.log(000);
         reject(123);
       });
 
       promise
+        .then((value) => {
+          console.log(111, value);
+          return 456;
+        })
+        .finally((value) => {
+          console.log(333, value);
+          // return new MyPromise((resolve, reject) => {
+          //   reject(789);
+          // });
+          throw 789;
+        })
+        .then((value) => {
+          console.log(444, value);
+        })
+        .catch((reason) => {
+          console.log(555, reason);
+        });
+
+      /* promise
         .then((value) => {
           console.log(111, value);
           // return 123
@@ -33,7 +51,7 @@
         .catch((reason) => {
           console.log(444, reason);
         });
-
+ */
       /* promise
         .then(
           (value) => {
