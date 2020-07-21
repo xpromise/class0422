@@ -13,12 +13,16 @@
     1. Module not found: Error: Can't resolve 'style-loader' in xxx
       模块没有找到，就是没有下载
       解决：npm i style-loader -D
+    2. Error: Cannot find module 'file-loader'  
+      模块没有找到，就是没有下载
+      解决：npm i file-loader -D
 */
 const path = require("path");
 
 module.exports = {
   // 配置对象：属性名固定的对象
   entry: "./src/js/index.js",
+
   output: {
     path: path.resolve(__dirname, "build"), // 目录
     filename: "./js/built.js", // 文件名
@@ -37,6 +41,23 @@ module.exports = {
             loader: "less-loader", // 将less文件编译成css文件
             options: {
               // 修改配置
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|wepb)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              // 小于12kb以下的图片会被base64处理
+              // 转化成base64 data url文本
+              // 优点：减少请求数量 缺点：体积更大
+              limit: 12 * 1024,
+              // [hash:10] -- hash值取10位
+              // [ext] -- 源文件扩展名
+              name: './imgs/[hash:10].[ext]'
             },
           },
         ],
