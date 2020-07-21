@@ -30,6 +30,9 @@ const rename = require("gulp-rename");
 const less = require("gulp-less");
 const concat = require("gulp-concat");
 const connect = require("gulp-connect");
+const uglify = require("gulp-uglify");
+const cssmin = require("gulp-cssmin");
+const htmlmin = require("gulp-htmlmin");
 const open = require("./open");
 /*
   将JS代码中ES6模块化语法编译成浏览器能识别的语法
@@ -49,7 +52,7 @@ gulp.task("babel", () => {
         presets: ["@babel/preset-env"],
       })
     )
-    .pipe(gulp.dest("dist/js")) // 输出到dist目录下
+    .pipe(gulp.dest("dist/js")); // 输出到dist目录下
 });
 
 gulp.task("browserify", function () {
@@ -102,11 +105,46 @@ gulp.task("connect", function () {
   gulp.watch("src/js/*.js", gulp.series(["js-dev"]));
 });
 
+gulp.task("uglify", function () {
+  return gulp
+    .src("./dist/js/built.js")
+    .pipe(uglify())
+    .pipe(rename("built.min.js"))
+    .pipe(gulp.dest("./build/js"));
+});
+
+gulp.task("cssmin", function () {
+  return gulp
+    .src("./dist/css/all.css")
+    .pipe(cssmin())
+    .pipe(rename("all.min.css"))
+    .pipe(gulp.dest("./build/css"));
+});
+
+gulp.task("htmlmin", function () {
+  return gulp
+    .src("./src/index.html")
+    .pipe(
+      htmlmin({
+        collapseWhitespace: true, // 去除空格换行符
+        removeComments: true, // 去除注释
+      })
+    )
+    .pipe(gulp.dest("./build"));
+});
+
 // 配置统一任务
 // gulp.series([多个任务])  顺序执行：速度慢
 // gulp.parallel([多个任务])  并行执行：速度快
+// 开发环境
 gulp.task("js-dev", gulp.series(["babel", "browserify"]));
 
 gulp.task("dev", gulp.parallel(["js-dev", "less", "html"]));
 
 gulp.task("watch", gulp.series(["dev", "connect"]));
+
+// 生产环境
+gulp.task("js-prod", gulp.series(["js-dev", "uglify"]));
+gulp.task("css-prod", gulp.series(["less", "cssmin"]));
+
+gulp.task('build', gulp.parallel(['js-prod', 'css-prod', 'htmlmin']));
