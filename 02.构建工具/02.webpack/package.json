@@ -12,6 +12,8 @@
   "devDependencies": {
     "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0",
     "less-loader": "^6.2.0",
     "style-loader": "^1.2.1",
     "url-loader": "^4.1.0",

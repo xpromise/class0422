@@ -9,6 +9,14 @@
       官网提供的下载不一定是所有的包
     4. 配置
 
+  plugins用法：
+    1. 确定干什么事
+    2. 去 https://webpack.docschina.org/plugins/ 官网找plugin
+    3. 下载loader
+      官网提供的下载不一定是所有的包
+    4. 引入插件  
+    5. 配置
+
   常见错误：
     1. Module not found: Error: Can't resolve 'style-loader' in xxx
       模块没有找到，就是没有下载
@@ -18,11 +26,11 @@
       解决：npm i file-loader -D
 */
 const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   // 配置对象：属性名固定的对象
   entry: "./src/js/index.js",
-
   output: {
     path: path.resolve(__dirname, "build"), // 目录
     filename: "./js/built.js", // 文件名
@@ -49,7 +57,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|wepb)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               // 小于12kb以下的图片会被base64处理
               // 转化成base64 data url文本
@@ -57,12 +65,26 @@ module.exports = {
               limit: 12 * 1024,
               // [hash:10] -- hash值取10位
               // [ext] -- 源文件扩展名
-              name: './imgs/[hash:10].[ext]'
+              name: "./imgs/[hash:10].[ext]",
             },
           },
         ],
       },
+      // 处理html中的img
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
+      },
     ],
   },
+  plugins: [
+    // 处理html文件
+    // 自动引入打包生成js和css
+    new HtmlWebpackPlugin({
+      // 以 './src/index.html' 为模板创建新html文件
+      // 新文件会有源文件的结构，自动引入打包生成js和css
+      template: './src/index.html'
+    })
+  ],
   mode: "development",
 };
