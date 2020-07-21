@@ -27,9 +27,10 @@ const gulp = require("gulp");
 const babel = require("gulp-babel");
 const browserify = require("gulp-browserify");
 const rename = require("gulp-rename");
-const less = require('gulp-less');
-const concat = require('gulp-concat');
-
+const less = require("gulp-less");
+const concat = require("gulp-concat");
+const connect = require("gulp-connect");
+const open = require("./open");
 /*
   将JS代码中ES6模块化语法编译成浏览器能识别的语法
     babel
@@ -48,7 +49,7 @@ gulp.task("babel", () => {
         presets: ["@babel/preset-env"],
       })
     )
-    .pipe(gulp.dest("dist/js")); // 输出到dist目录下
+    .pipe(gulp.dest("dist/js")) // 输出到dist目录下
 });
 
 gulp.task("browserify", function () {
@@ -65,25 +66,47 @@ gulp.task("browserify", function () {
         })
       )
       .pipe(gulp.dest("./dist/js"))
+      .pipe(connect.reload()) // 刷新浏览器
   );
 });
 
-gulp.task('less', function () {
-  return gulp.src('./src/less/*.less')
+gulp.task("less", function () {
+  return gulp
+    .src("./src/less/*.less")
     .pipe(less()) // 将less编译成css
-    .pipe(concat('all.css')) // 合并文件
-    .pipe(gulp.dest('./dist/css'));
+    .pipe(concat("all.css")) // 合并文件
+    .pipe(gulp.dest("./dist/css"))
+    .pipe(connect.reload());
 });
 
-gulp.task('html', function () {
-  return gulp.src('./src/index.html')
-    .pipe(gulp.dest('./dist'));
+gulp.task("html", function () {
+  return gulp
+    .src("./src/index.html")
+    .pipe(gulp.dest("./dist"))
+    .pipe(connect.reload());
 });
 
+gulp.task("connect", function () {
+  // 创建一个服务器
+  connect.server({
+    port: 9527, // 端口号
+    root: ["dist"], // 暴露目录
+    livereload: true, // 自动刷新浏览器
+  });
+  // 自动打开浏览器
+  open("http://localhost:9527");
+  // 当你修改源代码，自动编译
+  // 自动监视 src/index.html 文件的变化，一旦文件发生变化就会执行后面
+  gulp.watch("src/index.html", gulp.series(["html"]));
+  gulp.watch("src/less/*.less", gulp.series(["less"]));
+  gulp.watch("src/js/*.js", gulp.series(["js-dev"]));
+});
 
 // 配置统一任务
 // gulp.series([多个任务])  顺序执行：速度慢
 // gulp.parallel([多个任务])  并行执行：速度快
-gulp.task("js-dev", gulp.series(['babel', 'browserify']));
+gulp.task("js-dev", gulp.series(["babel", "browserify"]));
 
-gulp.task("dev", gulp.parallel(['js-dev', 'less', 'html']));
+gulp.task("dev", gulp.parallel(["js-dev", "less", "html"]));
+
+gulp.task("watch", gulp.series(["dev", "connect"]));
