@@ -32,7 +32,8 @@ module.exports = {
   // 配置对象：属性名固定的对象
   entry: "./src/js/index.js",
   output: {
-    path: path.resolve(__dirname, "build"), // 目录
+    // path: path.resolve(__dirname, "build"), // 目录
+    path: undefined, // 目录
     filename: "./js/built.js", // 文件名
   },
   module: {
@@ -87,4 +88,29 @@ module.exports = {
     })
   ],
   mode: "development",
+  // 开发服务器：用来做自动化
+  // npm i webpack-dev-server -D
+  // webpack指令不能启动devServer配置
+  // npx webpack-dev-server
+  // 特点：不会任何输出
+  devServer: {
+    // contentBase: path.resolve(__dirname, "build"),
+    port: 9527,
+    // host: 'localhost',
+    open: true, // 自动打开浏览器
+    compress: true, // 启动gzip压缩
+    // 开发时不要使用，开发完成在使用
+    // clientLogLevel: 'none', // 让客户端打印内容少
+    // quiet: true, // 让终端打印内容少
+  },
+  /*
+    增强调试
+    给JS生成xxx.map文件
+      map文件中记录构建后代码和源代码的映射关系
+      将来构建后代码报错，根据map文件的映射关系找到源代码的错误
+      从而提示的是源代码的错误
+  */
+  devtool: 'eval-cheap-module-source-map' // 开发环境
+  // devtool: 'cheap-module-source-map' // 生产环境 优点：速度快 缺点：提示相对更差
+  // devtool: 'source-map' // 生产环境：优点：提示更加友好 缺点：速度快
 };
