@@ -112,5 +112,5 @@ module.exports = {
   */
   devtool: 'eval-cheap-module-source-map' // 开发环境
   // devtool: 'cheap-module-source-map' // 生产环境 优点：速度快 缺点：提示相对更差
-  // devtool: 'source-map' // 生产环境：优点：提示更加友好 缺点：速度快
+  // devtool: 'source-map' // 生产环境：优点：提示更加友好 缺点：速度慢
 };
