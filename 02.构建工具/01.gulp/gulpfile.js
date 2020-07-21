@@ -27,6 +27,8 @@ const gulp = require("gulp");
 const babel = require("gulp-babel");
 const browserify = require("gulp-browserify");
 const rename = require("gulp-rename");
+const less = require('gulp-less');
+const concat = require('gulp-concat');
 
 /*
   将JS代码中ES6模块化语法编译成浏览器能识别的语法
@@ -66,8 +68,22 @@ gulp.task("browserify", function () {
   );
 });
 
+gulp.task('less', function () {
+  return gulp.src('./src/less/*.less')
+    .pipe(less()) // 将less编译成css
+    .pipe(concat('all.css')) // 合并文件
+    .pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('html', function () {
+  return gulp.src('./src/index.html')
+    .pipe(gulp.dest('./dist'));
+});
+
 
 // 配置统一任务
 // gulp.series([多个任务])  顺序执行：速度慢
 // gulp.parallel([多个任务])  并行执行：速度快
-gulp.task("dev", gulp.series(['babel', 'browserify']));
+gulp.task("js-dev", gulp.series(['babel', 'browserify']));
+
+gulp.task("dev", gulp.parallel(['js-dev', 'less', 'html']));

@@ -1,0 +1,17 @@
+#box1 {
+  width: 100px;
+  height: 100px;
+  background-color: pink;
+}
+#box1 p {
+  font-size: 22px;
+}
+
+#box2 {
+  width: 200px;
+  height: 200px;
+  background-color: deeppink;
+}
+#box2 p {
+  font-size: 30px;
+}
