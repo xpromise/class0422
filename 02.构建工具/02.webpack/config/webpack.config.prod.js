@@ -110,16 +110,27 @@ module.exports = {
         exclude: /node_modules/,
         // include: path.resolve(__dirname, '../src'),
         use: {
-          // 将ES6其他语法编译成ES5一下语法
+          // 将ES6简单语法编译成ES5一下语法
+          // 一旦遇到复杂语法如：promise、generator就处理不了
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"],
+            presets: [
+              [
+                "@babel/preset-env",
+                {
+                  useBuiltIns: 'usage', // 按需加载
+                  corejs: {version: 3},
+                  // 浏览器兼容性
+                  targets: '> 0.5%, not ie <= 9, not op_mini all, not dead', 
+                }
+              ]
+            ],
           },
         },
       },
       {
         test: /\.js$/,
-        enfore: "pre", // 优先执行
+        enforce: "pre", // 优先执行
         exclude: /node_modules/,
         loader: "eslint-loader",
         options: {
@@ -172,4 +183,5 @@ module.exports = {
   // devtool: "eval-cheap-module-source-map", // 开发环境
   // devtool: 'cheap-module-source-map' // 生产环境 优点：速度快 缺点：提示相对更差
   devtool: "source-map", // 生产环境：优点：提示更加友好 缺点：速度慢
+  performance: false // 关掉性能提示
 };
