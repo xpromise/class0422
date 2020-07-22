@@ -117,6 +117,16 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.js$/,
+        enfore: "pre", // 优先执行
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+        options: {
+          // eslint options (if necessary)
+          fix: true,
+        },
+      },
     ],
   },
   plugins: [
