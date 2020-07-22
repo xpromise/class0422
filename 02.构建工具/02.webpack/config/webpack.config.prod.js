@@ -12,7 +12,7 @@
   plugins用法：
     1. 确定干什么事
     2. 去 https://webpack.docschina.org/plugins/ 官网找plugin
-    3. 下载loader
+    3. 下载plugins
       官网提供的下载不一定是所有的包
     4. 引入插件  
     5. 配置
@@ -26,14 +26,13 @@
       解决：npm i file-loader -D
 */
 const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   // 配置对象：属性名固定的对象
   entry: "./src/js/index.js",
   output: {
-    // path: path.resolve(__dirname, "build"), // 目录
-    path: undefined, // 目录
+    path: path.resolve(__dirname, "../build"), // 目录
     filename: "./js/built.js", // 文件名
   },
   module: {
@@ -74,7 +73,7 @@ module.exports = {
       // 处理html中的img
       {
         test: /\.html$/,
-        loader: 'html-loader',
+        loader: "html-loader",
       },
     ],
   },
@@ -84,25 +83,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       // 以 './src/index.html' 为模板创建新html文件
       // 新文件会有源文件的结构，自动引入打包生成js和css
-      template: './src/index.html'
-    })
+      template: "./src/index.html",
+    }),
   ],
-  mode: "development",
-  // 开发服务器：用来做自动化
-  // npm i webpack-dev-server -D
-  // webpack指令不能启动devServer配置
-  // npx webpack-dev-server
-  // 特点：不会任何输出
-  devServer: {
-    // contentBase: path.resolve(__dirname, "build"),
-    port: 9527,
-    // host: 'localhost',
-    open: true, // 自动打开浏览器
-    compress: true, // 启动gzip压缩
-    // 开发时不要使用，开发完成在使用
-    // clientLogLevel: 'none', // 让客户端打印内容少
-    // quiet: true, // 让终端打印内容少
-  },
+  mode: "production",
   /*
     增强调试
     给JS生成xxx.map文件
@@ -110,7 +94,7 @@ module.exports = {
       将来构建后代码报错，根据map文件的映射关系找到源代码的错误
       从而提示的是源代码的错误
   */
-  devtool: 'eval-cheap-module-source-map' // 开发环境
+  // devtool: "eval-cheap-module-source-map", // 开发环境
   // devtool: 'cheap-module-source-map' // 生产环境 优点：速度快 缺点：提示相对更差
-  // devtool: 'source-map' // 生产环境：优点：提示更加友好 缺点：速度慢
+  devtool: 'source-map' // 生产环境：优点：提示更加友好 缺点：速度慢
 };

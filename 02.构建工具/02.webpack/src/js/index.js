@@ -7,6 +7,5 @@ import "../less/test2.less";
 // 引入图片
 // import '../imgs/1.jpg'
 
-console.log(add(4, 3)());
+console.log(add(4, 3));
 console.log(person);
-

@@ -4,7 +4,8 @@
   "description": "1. entry 入口\r 指示webpack从哪个文件开始构建/打包\r 2. output 输出\r 指示webpack打包完成的文件输出哪里去\r 3. loader 加载器\r webpack自身能力有限，只能处理js/json文件，但是遇到css/html等文件就没办法处理\r 能将webpack不识别的文件编译加载webpack能识别的文件，这样才能打包处理\r 4. plugin 插件\r 功能比loader更加强大，增强webpack的功能\r 5. mode 模式\r development 开发环境\r production 生产环境",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --config ./config/webpack.config.dev.js",
+    "build": "webpack --config ./config/webpack.config.prod.js"
   },
   "keywords": [],
   "author": "",
