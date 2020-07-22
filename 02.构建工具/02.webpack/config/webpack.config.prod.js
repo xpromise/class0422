@@ -35,7 +35,8 @@
 */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
   // 配置对象：属性名固定的对象
@@ -45,7 +46,7 @@ module.exports = {
     path: path.resolve(__dirname, "../build"), // 目录
     // 指定入口js文件输出路径
     filename: "js/[name].js", // 文件名
-    publicPath: '/' // 所有资源引入公共路径
+    publicPath: "/", // 所有资源引入公共路径
   },
   module: {
     rules: [
@@ -57,6 +58,21 @@ module.exports = {
           // loader写法：如果需要修改loader的配置，用对象，如果使用loader默认配置，直接写loader名称
           MiniCssExtractPlugin.loader, // 将JS中的css提取成单独文件
           "css-loader", // 将css文件以CommonJS模块方案整合到JS中
+          { // 做css兼容性处理
+            /*
+              在package.json配置browserslist
+              https://github.com/browserslist/browserslist#custom-usage-data
+            */
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: (loader) => [
+                require('postcss-import')({ root: loader.resourcePath }),
+                require('postcss-preset-env')(),
+                require('cssnano')()
+              ]
+            }
+          }, 
           {
             loader: "less-loader", // 将less文件编译成css文件
             options: {
@@ -96,10 +112,30 @@ module.exports = {
       // 以 './src/index.html' 为模板创建新html文件
       // 新文件会有源文件的结构，自动引入打包生成js和css
       template: "./src/index.html",
+      // minify: {
+      //   // https://github.com/DanielRuf/html-minifier-terser
+      //   collapseWhitespace: true, // 去除空格换行符
+      //   removeComments: true, // 移除注释
+      //   removeRedundantAttributes: true, // 移除默认值属性
+      //   removeScriptTypeAttributes: true, // 移除script type
+      //   removeStyleLinkTypeAttributes: true, // 移除link type
+      //   useShortDoctype: true, // 使用 doctype
+      //   minifyJS: true,
+      //   minifyCSS: true,
+      // },
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css'
-    })
+      filename: "css/[name].css",
+    }),
+    // 压缩css
+    new OptimizeCssAssetsPlugin({
+      // assetNameRegExp: /\.css$/g,
+      // cssProcessor: require('cssnano'),
+      cssProcessorPluginOptions: {
+        preset: ["default", { discardComments: { removeAll: true } }],
+      },
+      // canPrint: true
+    }),
   ],
   mode: "production",
   /*
@@ -111,5 +147,5 @@ module.exports = {
   */
   // devtool: "eval-cheap-module-source-map", // 开发环境
   // devtool: 'cheap-module-source-map' // 生产环境 优点：速度快 缺点：提示相对更差
-  devtool: 'source-map' // 生产环境：优点：提示更加友好 缺点：速度慢
+  devtool: "source-map", // 生产环境：优点：提示更加友好 缺点：速度慢
 };

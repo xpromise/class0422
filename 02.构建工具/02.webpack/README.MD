@@ -68,6 +68,8 @@ config/webpack.config.prod.js
 },
 ```
 
+5. 测试：分别运行指令看开发和生产环境是否有问题
+
 ## 提取 css 成单独文件
 
 1. 使用 `mini-css-extract-plugin` 插件来完成功能
@@ -102,7 +104,7 @@ config/webpack.config.prod.js
 
 ```js
  plugins: [new MiniCssExtractPlugin({
-    filename: './css/[name].css' // 此时才会进行css目录中
+    filename: './css/[name].css' // 此时文件才会进入到css目录中
  })],
 ```
 
