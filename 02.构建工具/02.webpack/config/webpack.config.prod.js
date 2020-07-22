@@ -58,21 +58,22 @@ module.exports = {
           // loader写法：如果需要修改loader的配置，用对象，如果使用loader默认配置，直接写loader名称
           MiniCssExtractPlugin.loader, // 将JS中的css提取成单独文件
           "css-loader", // 将css文件以CommonJS模块方案整合到JS中
-          { // 做css兼容性处理
+          {
+            // 做css兼容性处理
             /*
               在package.json配置browserslist
               https://github.com/browserslist/browserslist#custom-usage-data
             */
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
-              ident: 'postcss',
+              ident: "postcss",
               plugins: (loader) => [
-                require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-preset-env')(),
-                require('cssnano')()
-              ]
-            }
-          }, 
+                require("postcss-import")({ root: loader.resourcePath }),
+                require("postcss-preset-env")(),
+                require("cssnano")(),
+              ],
+            },
+          },
           {
             loader: "less-loader", // 将less文件编译成css文件
             options: {
@@ -102,6 +103,19 @@ module.exports = {
       {
         test: /\.html$/,
         loader: "html-loader",
+      },
+      {
+        test: /\.js$/,
+        // 排除node_modules不处理
+        exclude: /node_modules/,
+        // include: path.resolve(__dirname, '../src'),
+        use: {
+          // 将ES6其他语法编译成ES5一下语法
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
       },
     ],
   },
