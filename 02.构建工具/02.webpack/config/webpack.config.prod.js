@@ -24,16 +24,28 @@
     2. Error: Cannot find module 'file-loader'  
       模块没有找到，就是没有下载
       解决：npm i file-loader -D
+
+  下载
+    npm i serve -g
+  使用 
+    serve -s build   
+  功能 
+    启动一个服务器，将 build 目录当做根目录，下面资源会全部暴露出去
+  
 */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   // 配置对象：属性名固定的对象
   entry: "./src/js/index.js",
   output: {
+    // path是指定所有资源输出目录
     path: path.resolve(__dirname, "../build"), // 目录
-    filename: "./js/built.js", // 文件名
+    // 指定入口js文件输出路径
+    filename: "js/[name].js", // 文件名
+    publicPath: '/' // 所有资源引入公共路径
   },
   module: {
     rules: [
@@ -43,7 +55,7 @@ module.exports = {
         use: [
           // 执行顺序：从下往上，从右往左依次同步执行
           // loader写法：如果需要修改loader的配置，用对象，如果使用loader默认配置，直接写loader名称
-          "style-loader", // 将JS中css模块代码以style标签的方式插入到页面中
+          MiniCssExtractPlugin.loader, // 将JS中的css提取成单独文件
           "css-loader", // 将css文件以CommonJS模块方案整合到JS中
           {
             loader: "less-loader", // 将less文件编译成css文件
@@ -65,7 +77,7 @@ module.exports = {
               limit: 12 * 1024,
               // [hash:10] -- hash值取10位
               // [ext] -- 源文件扩展名
-              name: "./imgs/[hash:10].[ext]",
+              name: "imgs/[hash:10].[ext]",
             },
           },
         ],
@@ -85,6 +97,9 @@ module.exports = {
       // 新文件会有源文件的结构，自动引入打包生成js和css
       template: "./src/index.html",
     }),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css'
+    })
   ],
   mode: "production",
   /*
