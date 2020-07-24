@@ -4,7 +4,6 @@ const server = http.createServer((req, res) => {
   setTimeout(() => {
     res.setHeader("Content-Type", "application/json;charset=utf8");
     res.setHeader("Access-Control-Allow-Origin", "*");
-
     const person = {
       name: "jack",
       age: 18,
