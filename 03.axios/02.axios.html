@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios</title>
+  </head>
+  <body>
+    <button id="btn1">GET请求</button>
+    <button id="btn2">POST请求</button>
+    <button id="btn3">PUT请求</button>
+    <button id="btn4">DELETE请求</button>
+    <script src="./axios.min.js"></script>
+    <script>
+      /*
+      1. 下载
+        npm i json-server -g
+      2. 新建 db.json
+      3. 启动server
+        json-server --watch db.json
+
+      发送 GET POST PUT DELETE 到JSON-SERVER中
+      http://localhost:3000/posts  访问文章
+      http://localhost:3000/comments 访问评论
+      http://localhost:3000/profile 访问个人中心
+    */
+      // 配置请求地址公共前缀
+      axios.defaults.baseURL = "http://localhost:3000";
+
+      document.getElementById("btn1").onclick = function () {
+        axios({
+          // method: "GET",
+          url: "/posts",
+          params: {}, // GET请求的查询字符串参数
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
+      document.getElementById("btn2").onclick = function () {
+        axios({
+          method: "POST",
+          url: "/posts",
+          data: { title: "自定义promise", author: "老王" },
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
+      document.getElementById("btn3").onclick = function () {
+        axios({
+          method: "PUT",
+          url: "/posts/3",
+          data: { title: "自定义promise~~~", author: "老王~~~" },
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
+      document.getElementById("btn4").onclick = function () {
+        axios({
+          method: "DELETE",
+          url: "/posts/3",
+          params: {}, // GET请求的查询字符串参数
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+    </script>
+  </body>
+</html>
