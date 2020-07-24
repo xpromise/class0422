@@ -25,7 +25,7 @@
               resolve({
                 config: {},
                 headers: {},
-                data: JSON.parse(xhr.responseText)
+                data: JSON.parse(xhr.responseText),
               });
               return;
             }
@@ -37,7 +37,7 @@
           method = method.toUpperCase();
 
           // 查询字符串参数
-          let qs = '';
+          let qs = "";
           if (params) {
             /*
               1. GET请求遇到params参数
@@ -52,36 +52,39 @@
             // 提取对象所有属性名成数组
             const keys = Object.keys(params);
 
-            qs = keys.reduce((all, key) => {
-              // 属性值
-              const value = params[key];
-              all += `${key}=${value}&`;
-              return all;
-            }, '?')
-            // 多了一个 &，要去掉
-            .slice(1, -1)
+            qs = keys
+              .reduce((all, key) => {
+                // 属性值
+                const value = params[key];
+                all += `${key}=${value}&`;
+                return all;
+              }, "?")
+              // 多了一个 &，要去掉
+              .slice(0, -1);
           }
 
           xhr.open(method, url + qs, true);
 
           // 4. 发送请求
-          if (method === 'POST' || method === 'PUT') {
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=utf8');
+          if (method === "POST" || method === "PUT") {
+            xhr.setRequestHeader(
+              "Content-Type",
+              "application/json;charset=utf8"
+            );
             data = JSON.stringify(data);
             xhr.send(data);
             return;
           }
 
           xhr.send();
-          
         });
       }
 
       document.getElementById("btn1").onclick = function () {
         axios({
           // method: "GET",
-          url: "http://localhost:3000/posts1324",
-          params: {}, // GET请求的查询字符串参数
+          url: "http://localhost:3000/posts",
+          params: { username: "jack", age: 18 }, // GET请求的查询字符串参数
         })
           .then((res) => {
             console.log(res);

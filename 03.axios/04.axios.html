@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios</title>
+  </head>
+  <body>
+    <button id="btn1">发送3000请求</button>
+    <button id="btn2">发送4000请求</button>
+    <script src="./axios.min.js"></script>
+    <script>
+      /*
+        需求：
+          1. 有的请求发送 http://localhost:3000
+          2. 有的请求发送 http://localhost:4000
+      */
+      // axios.defaults.baseURL = '';
+
+      const axiosInstance1 = axios.create({
+        // 公共请求地址前缀
+        baseURL: 'http://localhost:3000',
+        // 公共请求头参数
+        headers: {
+          
+        },
+        // 请求超时时间
+        // 请求时间超过30s没有响应结果，就会自动中断
+        timeout: 30000
+      })
+
+      const axiosInstance2 = axios.create({
+        // 公共请求地址前缀
+        baseURL: 'http://localhost:4000',
+        // 公共请求头参数
+        headers: {
+
+        },
+        // 请求超时时间
+        // 请求时间超过30s没有响应结果，就会自动中断
+        timeout: 30000
+      })
+
+      // 配置请求地址公共前缀
+      document.getElementById("btn1").onclick = function () {
+        axiosInstance1({
+          // method: "GET",
+          url: "/posts",
+          params: {}, // GET请求的查询字符串参数
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
+      document.getElementById("btn2").onclick = function () {
+        axiosInstance2({
+          // method: "GET",
+          url: "/comments",
+          params: {}, // GET请求的查询字符串参数
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
+    </script>
+  </body>
+</html>

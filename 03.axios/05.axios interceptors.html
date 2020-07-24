@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios</title>
+  </head>
+  <body>
+    <button id="btn1">发送3000请求</button>
+    <button id="btn2">发送4000请求</button>
+    <script src="./axios.min.js"></script>
+    <script>
+      /*
+        拦截器：
+          请求拦截器：
+            发送请求之前，先触发请求拦截器，再去发送请求
+          响应拦截器：
+            接受响应时，先触发响应拦截器，再触发后面then/catch
+      */
+      // axios.defaults.baseURL = '';
+
+      const instance = axios.create({
+        baseURL: "http://localhost:3000",
+      });
+
+      // 请求拦截器
+      instance.interceptors.request.use(
+        (config) => {
+          // 成功
+          // config 请求的配置对象
+          console.log("请求拦截器触发了", config);
+          /*
+            请求拦截器作用：修改请求的配置对象
+            复用代码
+          */
+          if (
+            config.headers["content-type"] ===
+            "application/x-www-form-urlencoded"
+          ) {
+            config.data = Object.keys(config.data)
+              .reduce((p, c) => {
+                const value = config.data[c];
+                p += `${c}=${value}&`;
+                return p;
+              }, "")
+              .slice(0, -1);
+          }
+
+          // config.headers.token = 'xxx'
+
+          // 返回值 config
+          return config;
+        }
+        // (err) => {
+        //   // 失败
+        //   return Promise.reject(err);
+        // }
+      );
+      // 响应拦截器
+      instance.interceptors.response.use(
+        (response) => {
+          // 请求成功 2xx
+          // 请求成功不代表功能成功
+          /*
+            将来返回的响应：
+              // 请求成功
+              {
+                status: 10000,
+                data: {}
+              }
+              {
+                code: 10000,
+                data: {} // 成功的数据
+              }
+              // 请求失败  
+              {
+                code: 10001,
+                msg: '失败的原因'
+              }
+          */
+
+          // 响应拦截器：判断功能是否成功
+          // if (response.data.code === 10000) {
+          //   return response.data.data;
+          // } else {
+          //   return Promise.reject(response.data.msg);
+          // }
+
+          return response.data;
+        },
+        (err) => {
+          // 请求失败 非2xx
+          // 根据响应状态码判断不同种类的错误
+          // 从而给用户不同的提示
+          console.dir(err);
+          console.log(err.response.status);
+          let msg = "";
+
+          switch (err.response.status) {
+            case 401:
+              msg = "没有权限访问";
+              break;
+            case 404:
+              msg = "该地址找不到";
+              break;
+            default:
+              msg = "发生未知故障，请联系管理员";
+              break;
+          }
+
+          return Promise.reject(msg);
+        }
+      );
+
+      // 配置请求地址公共前缀
+      document.getElementById("btn1").onclick = function () {
+        instance({
+          method: "POST",
+          url: "/posts123",
+          headers: {
+            "content-type": "application/x-www-form-urlencoded",
+          },
+          data: {
+            title: "axios",
+            author: "小明",
+          },
+          // data: 'title=axios&author=小明',
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+    </script>
+  </body>
+</html>
