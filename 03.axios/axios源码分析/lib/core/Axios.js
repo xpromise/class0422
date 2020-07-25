@@ -53,17 +53,40 @@ Axios.prototype.request = function request(config) {
 
   // dispatchRequest是发送请求的方法
   var chain = [dispatchRequest, undefined];
+  // 一定是成功promise
+  // config请求配置对象
   var promise = Promise.resolve(config);
 
   this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    // interceptor 就是请求拦截器设置的成功/失败回调的对象
+    // unshift往数组前面添加元素，返回值是添加后数组的长度
+    // [fulfilled, rejected, dispatchRequest, undefined]
     chain.unshift(interceptor.fulfilled, interceptor.rejected);
   });
 
   this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    // interceptor 就是响应拦截器设置的成功/失败回调的对象
+    // [fulfilled, rejected, dispatchRequest, undefined, fulfilled, rejected]
     chain.push(interceptor.fulfilled, interceptor.rejected);
   });
 
+  // chain = [fulfilled, rejected, dispatchRequest, undefined, fulfilled, rejected]
   while (chain.length) {
+    /*
+      第一次：promise成功的状态 --> 触发成功回调函数
+      promise.then(fulfilled, rejected); // 请求拦截器
+      触发request.fulfilled
+      返回值是一个新promise，内部结果值 看 request.fulfilled 返回值
+        结论：首先触发请求拦截器的成功的回调
+            Promise.resolve(config) --> promise内部的值就是config --> 所以请求拦截器的成功的回调能接收到config参数
+            dispatchRequest需要config参数 --> request.fulfilled需要return config
+      
+      return Promise.resolve(config)
+        .then(request.fulfilled, request.rejected) // 第一次while
+        .then(dispatchRequest, undefined) // 第二次while
+        .then(response.fulfilled, response.rejected) // 第三次while
+    */
+
     promise = promise.then(chain.shift(), chain.shift());
   }
 

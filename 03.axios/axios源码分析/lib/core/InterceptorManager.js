@@ -15,10 +15,12 @@ function InterceptorManager() {
  * @return {Number} An ID used to remove interceptor later
  */
 InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  // 将成功/失败回调添加到handlers
   this.handlers.push({
     fulfilled: fulfilled,
     rejected: rejected
   });
+  // 并返回对应的下标
   return this.handlers.length - 1;
 };
 
@@ -42,7 +44,10 @@ InterceptorManager.prototype.eject = function eject(id) {
  * @param {Function} fn The function to call for each interceptor
  */
 InterceptorManager.prototype.forEach = function forEach(fn) {
+  // utils.forEach既能遍历对象也能遍历数组
+  // utils.forEach(要遍历的元素，遍历时触发的函数)
   utils.forEach(this.handlers, function forEachHandler(h) {
+    // h --> {fullfiled, rejected}
     if (h !== null) {
       fn(h);
     }
