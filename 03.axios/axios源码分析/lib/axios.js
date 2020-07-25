@@ -33,8 +33,10 @@ var axios = createInstance(defaults);
 // Expose Axios class to allow class inheritance
 axios.Axios = Axios;
 
-// Factory for creating new instances
+// 创建instance并返回
+// instance和axios有区别：axios功能更加强大
 axios.create = function create(instanceConfig) {
+  // mergeConfig 合并配置：如果配置有相同的，后面的会覆盖掉前面的
   return createInstance(mergeConfig(axios.defaults, instanceConfig));
 };
 

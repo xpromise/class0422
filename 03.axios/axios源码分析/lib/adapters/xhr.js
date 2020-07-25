@@ -24,7 +24,7 @@ module.exports = function xhrAdapter(config) {
     ) {
       delete requestHeaders['Content-Type']; // Let the browser set it
     }
-
+    // 创建xhr对象
     var request = new XMLHttpRequest();
 
     // HTTP basic authentication
@@ -34,13 +34,15 @@ module.exports = function xhrAdapter(config) {
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
+    // 拼接成完整请求地址
     var fullPath = buildFullPath(config.baseURL, config.url);
+    // 设置请求信息
     request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
 
     // Set the request timeout in MS
     request.timeout = config.timeout;
 
-    // Listen for ready state
+    // 绑定事件监听：接受响应
     request.onreadystatechange = function handleLoad() {
       if (!request || request.readyState !== 4) {
         return;
@@ -57,15 +59,17 @@ module.exports = function xhrAdapter(config) {
       // Prepare the response
       var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      // 成功响应的结果
       var response = {
-        data: responseData,
-        status: request.status,
-        statusText: request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
+        data: responseData, // 数据
+        status: request.status, // 状态码
+        statusText: request.statusText, // 响应文本
+        headers: responseHeaders, // 响应头
+        config: config, // 请求配置对象
+        request: request // xhr对象
       };
 
+      // 设置成功/失败
       settle(resolve, reject, response);
 
       // Clean up request
@@ -180,7 +184,7 @@ module.exports = function xhrAdapter(config) {
       requestData = null;
     }
 
-    // Send the request
+    // 发送请求
     request.send(requestData);
   });
 };

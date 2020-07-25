@@ -28,7 +28,9 @@ function Axios(instanceConfig) {
  */
 Axios.prototype.request = function request(config) {
   /*eslint no-param-reassign:0*/
-  // Allow for axios('example/url'[, config]) a la fetch API
+  // axios(url, config) --> request(url, config)
+  // axios(config) --> request(config)
+  // axios.get(url, config) --> request(config)
   if (typeof config === 'string') {
     config = arguments[1] || {};
     config.url = arguments[0];
@@ -36,18 +38,20 @@ Axios.prototype.request = function request(config) {
     config = config || {};
   }
 
+  // 合并配置
   config = mergeConfig(this.defaults, config);
 
-  // Set config.method
+  // 设置请求方式
   if (config.method) {
     config.method = config.method.toLowerCase();
   } else if (this.defaults.method) {
     config.method = this.defaults.method.toLowerCase();
   } else {
+    // 默认请求方式是GET
     config.method = 'get';
   }
 
-  // Hook up interceptors middleware
+  // dispatchRequest是发送请求的方法
   var chain = [dispatchRequest, undefined];
   var promise = Promise.resolve(config);
 

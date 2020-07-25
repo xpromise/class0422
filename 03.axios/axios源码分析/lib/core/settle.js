@@ -12,8 +12,10 @@ var createError = require('./createError');
 module.exports = function settle(resolve, reject, response) {
   var validateStatus = response.config.validateStatus;
   if (!response.status || !validateStatus || validateStatus(response.status)) {
+    // 2xx开头才成功
     resolve(response);
   } else {
+    // 非2xx开头就是
     reject(createError(
       'Request failed with status code ' + response.status,
       response.config,

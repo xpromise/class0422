@@ -26,14 +26,14 @@ module.exports = function dispatchRequest(config) {
   // Ensure headers exist
   config.headers = config.headers || {};
 
-  // Transform request data
+  // 如果data是对象，就会转换json字符串
   config.data = transformData(
     config.data,
     config.headers,
     config.transformRequest
   );
 
-  // Flatten headers
+  // 合并headers
   config.headers = utils.merge(
     config.headers.common || {},
     config.headers[config.method] || {},
@@ -46,13 +46,14 @@ module.exports = function dispatchRequest(config) {
       delete config.headers[method];
     }
   );
-
+  
+  // xhr模块
   var adapter = config.adapter || defaults.adapter;
 
   return adapter(config).then(function onAdapterResolution(response) {
     throwIfCancellationRequested(config);
 
-    // Transform response data
+    // 如果json字符串，就会转化成js对象返回
     response.data = transformData(
       response.data,
       response.headers,
