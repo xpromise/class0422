@@ -49,7 +49,9 @@ CancelToken.source = function source() {
     cancel = c;
   });
   return {
-    token: token,
+    // CancelToken的实例对象 有个属性promise，默认是pending
+    // 只有调用 cancel 方法， promise才会变成成功状态
+    token: token, 
     cancel: cancel
   };
 };

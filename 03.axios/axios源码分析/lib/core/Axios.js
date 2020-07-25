@@ -57,13 +57,14 @@ Axios.prototype.request = function request(config) {
   // config请求配置对象
   var promise = Promise.resolve(config);
 
+  // 请求拦截器可以添加多个，后添加先执行
   this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
     // interceptor 就是请求拦截器设置的成功/失败回调的对象
     // unshift往数组前面添加元素，返回值是添加后数组的长度
     // [fulfilled, rejected, dispatchRequest, undefined]
     chain.unshift(interceptor.fulfilled, interceptor.rejected);
   });
-
+  // 响应拦截器可以添加多个，先添加先执行
   this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
     // interceptor 就是响应拦截器设置的成功/失败回调的对象
     // [fulfilled, rejected, dispatchRequest, undefined, fulfilled, rejected]

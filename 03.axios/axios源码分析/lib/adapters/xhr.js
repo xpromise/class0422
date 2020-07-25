@@ -172,7 +172,7 @@ module.exports = function xhrAdapter(config) {
         if (!request) {
           return;
         }
-
+        // 取消请求
         request.abort();
         reject(cancel);
         // Clean up request

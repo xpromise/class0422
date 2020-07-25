@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ajax</title>
+  </head>
+  <body>
+    <button id="btn1">发送请求</button>
+    <button id="btn2">取消请求</button>
+    <script>
+
+      let request;
+
+      document.getElementById("btn1").onclick = function () {
+        request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+          if (request.readyState !== 4) return;
+          if (request.status >= 200 && request.status < 300) {
+            console.log('成功', request.responseText);
+            return;
+          }
+          console.log('失败');
+        }
+        request.open('GET', 'http://localhost:9527');
+        request.send();
+      };
+
+      document.getElementById("btn2").onclick = function () {
+        // 取消请求的方法
+        request.abort();
+      };
+    </script>
+  </body>
+</html>
