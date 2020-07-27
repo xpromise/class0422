@@ -39,10 +39,10 @@
             2. 指令语法：作为元素标签属性 v-xxx="JS表达式" 
               v-model：给元素标签进行双向数据绑定
                 数据双向绑定：
-                  以上页面出现数据展示：数据由 数据层（JS） 自动流向 视图层（页面）
+                  当页面出现数据展示时：数据由 数据层（JS） 自动流向 视图层（页面）
                   当你修改input的内容时， 
-                    数据 由 视图层（页面） 自动流向 数据层（JS） 
-                    数据由 数据层（JS） 自动流向 视图层（页面） 从而其他地方使用数据的内容也发生了变化
+                    数据先由 视图层（页面） 自动流向 数据层（JS） 
+                    数据再由 数据层（JS） 自动流向 视图层（页面） 从而其他地方使用数据的内容也发生了变化
 
             注意：表达式不是所有表达式
               OK：fn fn()  a   a ? true : false
@@ -70,19 +70,35 @@
 
           if (a > 1) {} // 语句
           a > 1 // 表达式
+
+        4. MVVM
+          MVC
+            M - Model 数据层（用来存储数据）
+            V - View 视图层 (用来展示页面)
+            C - Controller 控制层 (操作Model的数据显示到View页面上)
+          MVVM：Vue设计
+            M - Model 数据层（JS中的data数据）
+            V - View 视图层 （模板页面）
+            VM - ViewModel：实现数据双向绑定
+              View --> Model：指令语法 v-model
+                通过绑定DOM事件实现的
+              Model --> View：插值语法 {{xxx}}
+                通过数据绑定实现的
       */
-
-      Vue.config.devtools = true;
-
-      new Vue({
+      // vm是Vue的实例对象
+      const vm = new Vue({
         // 配置对象：属性名固定对象
-        el: "#app", // 元素element：用来获取DOM元素  内部通过querySelector获取
+        // el: "#app", // 元素element：用来获取DOM元素  内部通过querySelector获取
         data: {
           // 数据: 用来保存页面需要使用动态数据
           msg: "hello vue",
           xxx: "yyy",
         },
       });
+
+      vm.$mount("#app");
+
+      console.log(vm);
     </script>
   </body>
 </html>
