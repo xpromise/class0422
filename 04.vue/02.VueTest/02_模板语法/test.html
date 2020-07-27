@@ -50,9 +50,12 @@
     <script>
       /*
         v-model 双向数据绑定
+        {{JS表达式}}  只能用于元素内部显示的内容，不能用于标签属性值
         v-bind 强制绑定数据（单向数据绑定）
           给元素标签的某个属性强制绑定js数据
           简写 :
+          <input type="text" value="msg" />  值就是msg
+          <input type="text" :value="msg" /> 值会去vm上找msg属性，并返回值
         v-on 绑定DOM事件
           简写 @
       */

@@ -17,13 +17,67 @@
         计算属性存在缓存, 多次读取只执行一次getter计算
     -->
     <div id="app">
-      姓: <input type="text" placeholder="First Name" /><br />
-      名: <input type="text" placeholder="Last Name" /><br />
-      姓名1: <input type="text" placeholder="Full Name1" /><br />
+      姓: <input type="text" placeholder="First Name" v-model="firstName"/><br />
+      名: <input type="text" placeholder="Last Name" v-model="lastName"/><br />
+      姓名1: <input type="text" placeholder="Full Name1" v-model="fullName"/><br />
       姓名2: <input type="text" placeholder="Full Name2" /><br />
     </div>
 
     <script type="text/javascript" src="../js/vue.js"></script>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+      const person = {
+        firstName: "liu",
+        lastName: "yuan",
+        // fullName: 'liu yuan'
+      };
+
+      Object.defineProperty(person, "fullName", {
+        get() {
+          // 读取方法
+          return this.firstName + " " + this.lastName;
+        },
+        set(val) {
+          // 设置方法
+          const [firstName, lastName] = val.split(" ");
+          this.firstName = firstName;
+          this.lastName = lastName;
+        },
+      });
+
+      console.log(person);
+
+      person.fullName = "yuan liu";
+    </script>
+
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          firstName: "liu",
+          lastName: "yuan",
+        },
+        methods: {
+          fn() {},
+        },
+        // 定义计算属性
+        computed: {
+          // 特点：只要计算属性涉及到其他属性发生变化，就会重新计算
+          fullName: {
+            get() {
+              // data/methods/computed 将来会直接添加到实例对象上~
+              // 所以可以直接获取
+              return this.firstName + " " + this.lastName;
+            },
+            set(val) {
+              const [firstName, lastName] = val.split(" ");
+              this.firstName = firstName;
+              this.lastName = lastName;
+            },
+          },
+        },
+      });
+
+      console.log(vm);
+    </script>
   </body>
 </html>
