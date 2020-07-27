@@ -17,10 +17,13 @@
         计算属性存在缓存, 多次读取只执行一次getter计算
     -->
     <div id="app">
-      姓: <input type="text" placeholder="First Name" v-model="firstName"/><br />
-      名: <input type="text" placeholder="Last Name" v-model="lastName"/><br />
-      姓名1: <input type="text" placeholder="Full Name1" v-model="fullName"/><br />
-      姓名2: <input type="text" placeholder="Full Name2" /><br />
+      姓:
+      <input type="text" placeholder="First Name" v-model="firstName" /><br />
+      名: <input type="text" placeholder="Last Name" v-model="lastName" /><br />
+      姓名1:
+      <input type="text" placeholder="Full Name1" v-model="fullName" /><br />
+      姓名2:
+      <input type="text" placeholder="Full Name2" v-model="fullName2" /><br />
     </div>
 
     <script type="text/javascript" src="../js/vue.js"></script>
@@ -55,13 +58,16 @@
         data: {
           firstName: "liu",
           lastName: "yuan",
+          fullName2: "liu yuan",
         },
         methods: {
           fn() {},
         },
         // 定义计算属性
+        // 什么时候用计算属性？ 一旦有个属性要根据其他属性（data中的属性）计算生成结果
         computed: {
           // 特点：只要计算属性涉及到其他属性发生变化，就会重新计算
+          // 读和写的计算属性
           fullName: {
             get() {
               // data/methods/computed 将来会直接添加到实例对象上~
@@ -73,6 +79,27 @@
               this.firstName = firstName;
               this.lastName = lastName;
             },
+          },
+          // 只读计算属性
+          fullName1() {
+            // 当前函数就相当于属性的get的方法，没有set
+            return this.firstName + " " + this.lastName;
+          },
+        },
+        // 定义监视属性：监视data中属性的变化
+        // 什么时候用监视属性？一旦data中属性的变化时，要做一些特定操作（保存数据，发送ajax）
+        watch: {
+          // 监视data中firstName属性，一旦firstName属性发生变化，就会触发当前函数
+          firstName(newValue, oldValue) {
+            this.fullName2 = newValue + " " + this.lastName;
+          },
+          lastName(newValue, oldValue) {
+            this.fullName2 = this.firstName + " " + newValue;
+          },
+          fullName2(newValue) {
+            const [firstName, lastName] = newValue.split(" ");
+            this.firstName = firstName;
+            this.lastName = lastName;
           },
         },
       });
