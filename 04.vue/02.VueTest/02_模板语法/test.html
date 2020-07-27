@@ -30,10 +30,55 @@
       -->
     <div id="app">
       <h2>1. 双大括号表达式</h2>
-
+      <p>{{msg}}</p>
       <h2>2. 指令一: 强制数据绑定</h2>
-
+      <input type="text" value="msg" />
+      <input type="text" v-bind:value="msg" />
+      <!-- v-bind简写 -->
+      <input type="text" :value="msg" />
       <h2>3. 指令二: 绑定事件监听</h2>
+      <!-- 给button按钮绑定click事件，事件的回调函数是handleClick -->
+      <button v-on:click="handleClick">按钮1</button>
+      <!-- v-on简写 -->
+      <button @click="handleClick">按钮2</button>
+      <!-- input事件：当input的值发生变化时触发 -->
+      <input type="text" @input="handleInput" />
+      <!-- change：当input失去焦点并且值发生变化才会触发 -->
+      <input type="text" @change="handleChange" />
     </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      /*
+        v-model 双向数据绑定
+        v-bind 强制绑定数据（单向数据绑定）
+          给元素标签的某个属性强制绑定js数据
+          简写 :
+        v-on 绑定DOM事件
+          简写 @
+      */
+
+      new Vue({
+        el: "#app",
+        data: {
+          // 定义非函数数据
+          msg: "hello vue",
+        },
+        methods: {
+          // 定义n个方法 --> 一般作为事件回调函数
+          handleClick: function (event) {
+            console.log(event);
+            // this指向：指向vue实例对象vm
+            console.log(this);
+          },
+          // ES6 对象简写
+          handleInput(event) {
+            console.log(event.target.value);
+          },
+          handleChange(event) {
+            console.log(event.target.value);
+          },
+        },
+      });
+    </script>
   </body>
 </html>
