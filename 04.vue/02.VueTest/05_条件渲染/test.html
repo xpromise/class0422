@@ -9,14 +9,44 @@
       1. 条件渲染指令
         v-if
         v-else
+        v-else-if
+
         v-show
       2. 比较v-if与v-show
-        如果需要频繁切换 v-show 较好
+        v-if 
+          隐藏的话会将元素从DOM树中移除
+        v-show
+          隐藏的话通过控制样式display: none;来隐藏的
+
+        如果需要频繁切换 v-show 性能较好
+          原因是 不用频繁的DOM操作
+        如果次数很少，只有1/2次，用 v-if  
       -->
 
-    <div id="app "></div>
+    <div id="app">
+      <!-- 如果值为true，相当于默认值，可以省略不写 -->
+      <!-- <p v-if="isShow">Vue太难了，学不会怎么办？111</p> -->
+      <!-- <p v-else-if="false">Vue太难了，学不会怎么办？222</p> -->
+      <!-- <p v-else>Vue太难了，学不会怎么办？333</p> -->
+
+      <p v-show="isShow">Vue太难了，学不会怎么办？111</p>
+
+      <button @click="changeShow">按钮</button>
+    </div>
 
     <script type="text/javascript" src="../js/vue.js"></script>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+      new Vue({
+        el: "#app",
+        data: {
+          isShow: true
+        },
+        methods: {
+          changeShow() {
+            this.isShow = !this.isShow;
+          }
+        }
+      });
+    </script>
   </body>
 </html>

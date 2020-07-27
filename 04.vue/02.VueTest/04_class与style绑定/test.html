@@ -3,6 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <title>04_class与style绑定</title>
+    <style>
+      .color-red {
+        color: red;
+      }
+      .color-green {
+        color: green;
+      }
+      .font {
+        font-size: 30px;
+      }
+    </style>
   </head>
   <body>
     <!--
@@ -20,15 +31,46 @@
 
     <div id="app">
       <h2>1. class绑定: :class='xxx'</h2>
-      <p>这是一段文字~</p>
-      <button>改变颜色</button>
+      <p class="color-red">这是一段文字~</p>
+      <!-- v-bind -->
+      <!-- 动态样式名：将来会发生变化/将来服务器请求回来动态确定 -->
+      <!-- 单个类名 -->
+      <p :class="color">这是一段文字~</p>
+      <!-- 多个类名 -->
+      <p :class="{'color-red': isRed, 'color-green': !isRed}">这是一段文字~</p>
+      <p :class="['color-red', xxx]">这是一段文字~</p>
+
+      <!-- <button @click="changeColor1">改变颜色</button> -->
+      <button @click="changeColor2">改变颜色</button>
 
       <h2>2. style绑定</h2>
-      <p>这是一段文字~</p>
+      <p style="font-size: 30px;color: red;">这是一段文字~</p>
+      <!-- 动态样式: 里面的样式名称必须采用小驼峰命名法 -->
+      <p :style="{fontSize: size, color: 'green'}">这是一段文字~</p>
+
       <input type="text" placeholder="请输入字体大小" />
     </div>
 
     <script src="../js/vue.js"></script>
-    <script></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          color: "color-red",
+          isRed: true,
+          xxx: "font",
+          size: '40px'
+        },
+        methods: {
+          changeColor1() {
+            this.color =
+              this.color === "color-green" ? "color-red" : "color-green";
+          },
+          changeColor2() {
+            this.isRed = !this.isRed;
+          },
+        },
+      });
+    </script>
   </body>
 </html>
