@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>01_HelloWorld</title>
+  </head>
+  <body>
+    <!--
+      1. 引入Vue.js
+      2. 创建Vue对象
+        el : 指定根element(选择器)
+        data : 初始化数据(页面可以访问)
+      3. 双向数据绑定 : v-model
+      4. 显示数据 : {{xxx}}
+      5. 理解vue的mvvm实现
+    -->
+    <div id="app">
+      <p>{{msg}}</p>
+      <p>{{xxx}}</p>
+    </div>
+    <!-- 引入Vue.js -->
+    <script src="../js/vue.min.js"></script>
+    <script>
+      /*
+        一旦引入Vue，全局多一个 Vue
+
+        1. new Vue(配置对象)
+          配置对象文档：https://cn.vuejs.org/v2/api/
+            选项 --> 配置对象的参数
+      */
+      new Vue({
+        // 配置对象：属性名固定对象
+        el: '#app', // 元素element：用来获取DOM元素  内部通过querySelector获取
+        data: { // 数据: 用来保存页面需要使用动态数据
+          msg: 'hello vue',
+          xxx: 'yyy'
+        }
+      });
+    </script>
+  </body>
+</html>
