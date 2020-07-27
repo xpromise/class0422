@@ -15,11 +15,13 @@
       5. 理解vue的mvvm实现
     -->
     <div id="app">
+      <input type="text" v-model="msg" />
       <p>{{msg}}</p>
       <p>{{xxx}}</p>
+      <p>hello vue</p>
     </div>
     <!-- 引入Vue.js -->
-    <script src="../js/vue.min.js"></script>
+    <script src="../js/vue.js"></script>
     <script>
       /*
         一旦引入Vue，全局多一个 Vue
@@ -27,14 +29,59 @@
         1. new Vue(配置对象)
           配置对象文档：https://cn.vuejs.org/v2/api/
             选项 --> 配置对象的参数
+
+        2. 模板
+          模板页面：整个页面就是模板页面 HMLT + CSS + JS
+          模板语法：
+            1. 插值语法（双大括号表达式）：{{JS表达式}}
+              作用：用来动态展示Vue中的数据
+
+            2. 指令语法：作为元素标签属性 v-xxx="JS表达式" 
+              v-model：给元素标签进行双向数据绑定
+                数据双向绑定：
+                  以上页面出现数据展示：数据由 数据层（JS） 自动流向 视图层（页面）
+                  当你修改input的内容时， 
+                    数据 由 视图层（页面） 自动流向 数据层（JS） 
+                    数据由 数据层（JS） 自动流向 视图层（页面） 从而其他地方使用数据的内容也发生了变化
+
+            注意：表达式不是所有表达式
+              OK：fn fn()  a   a ? true : false
+              不OK： if else  for
+
+        3. 表达式&语句的区别
+          1. 表达式
+            - 没有分号
+            - 一定会有返回值（返回值可能是undefined）
+
+          2. 语句
+            - 有分号（没有分号，在JS编译时会自动添加分号）
+            - 没有返回值
+
+          const a = 123 // 语句
+          a // 表达式
+          123 // 表达式
+          a; // 语句
+
+          function fn() {} // 语句
+          const fn = () => {} // 函数表达式语句
+          fn // 表达式
+          fn() // 表达式
+          fn(); // 语句
+
+          if (a > 1) {} // 语句
+          a > 1 // 表达式
       */
+
+      Vue.config.devtools = true;
+
       new Vue({
         // 配置对象：属性名固定对象
-        el: '#app', // 元素element：用来获取DOM元素  内部通过querySelector获取
-        data: { // 数据: 用来保存页面需要使用动态数据
-          msg: 'hello vue',
-          xxx: 'yyy'
-        }
+        el: "#app", // 元素element：用来获取DOM元素  内部通过querySelector获取
+        data: {
+          // 数据: 用来保存页面需要使用动态数据
+          msg: "hello vue",
+          xxx: "yyy",
+        },
       });
     </script>
   </body>
