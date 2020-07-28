@@ -39,6 +39,7 @@
         当你new Vue()时会自动触发
         beforeCreate
           在数据代理之前触发的，所以此时还不能使用data中的数据
+          数据代理：将data中的数据代理到this上
         created
           在数据代理之后触发的，所以此时才可以使用data中的数据
         beforeMount
@@ -74,8 +75,6 @@
           - 清除定时器
           - 解绑特殊事件
             等收尾工作
-
-
   */
 
       new Vue({
