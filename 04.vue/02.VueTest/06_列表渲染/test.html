@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>06_列表渲染</title>
-</head>
-<body>
-
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>06_列表渲染</title>
+  </head>
+  <body>
+    <!--
 1. 列表显示
   数组: v-for / index
   对象: v-for / key
@@ -15,16 +14,43 @@
   替换item
 -->
 
-<div id="demo">
-  <h2>测试: v-for 遍历数组</h2>
+    <div id="demo">
+      <h2>测试: v-for 遍历数组</h2>
+      <ul>
+        <!-- 
+          遍历需要给元素添加key属性，它的值得是唯一的 
+          有id用id，没有id再用index
+          v-for="(person, index) in persons"
+          v-for="person in persons"
+          v-for="(person, index) in persons"
+          v-for="person, index of persons"
+          v-for="person of persons"
+        -->
+        <li v-for="(person, index) in persons" :key="person.id">
+          {{person.name}}--{{person.age}}--{{person.id}}--{{index}}
+        </li>
+      </ul>
+      <h2>测试: v-for 遍历对象</h2>
+      <ul>
+        <li v-for="(value, key) in persons[0]" :key="value">
+          {{key}}--{{value}}
+        </li>
+      </ul>
+    </div>
 
-  <h2>测试: v-for 遍历对象</h2>
-
-</div>
-
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
-
-</script>
-</body>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      new Vue({
+        el: "#demo",
+        data: {
+          persons: [
+            { id: 1, name: "jack", age: 18 },
+            { id: 2, name: "rose", age: 16 },
+            { id: 3, name: "jerry", age: 20 },
+            { id: 4, name: "tom", age: 22 },
+          ],
+        },
+      });
+    </script>
+  </body>
 </html>
