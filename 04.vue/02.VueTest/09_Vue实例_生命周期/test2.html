@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>09_Vue实例_生命周期</title>
+  </head>
+  <body>
+    <div id="demo">
+      <h1 :style="{opacity: opacity}">Vue学不会，怎么办？</h1>
+      <button @click="goDie">不活了</button>
+    </div>
+
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+
+      new Vue({
+        el: "#demo",
+        data: {
+          // data的数据要用于动态展示
+          // 如果要在实例对象上定义数据，但是又不用数据展示，直接定义在this上
+          opacity: 1,
+        },
+        methods: {
+          goDie() {
+            this.$destroy();
+          }
+        },
+        created() {
+          console.log("created()", this);
+          this.timeId = setInterval(() => {
+            console.log('setInterval()');
+            // 改变opacity
+            let { opacity } = this;
+            opacity -= 0.01;
+            if (opacity <= 0) {
+              opacity = 1;
+            }
+            this.opacity = opacity;
+          }, 1000 / 60);
+        },
+        destroyed() {
+          // 清除定时器
+          clearInterval(this.timeId);
+        }
+      });
+    </script>
+  </body>
+</html>
