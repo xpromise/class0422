@@ -1,18 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>06_列表渲染_过滤与排序</title>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>06_列表渲染_过滤与排序</title>
+  </head>
+  <body>
+    <!--
 1. 列表过滤
 2. 列表排序
 -->
+    <div id="root">
+      <input type="text" placeholder="请输入搜索内容" v-model="searchName" />
+      <ul>
+        <li v-for="person in filterPersons" :key="person.id">
+          {{person.id}} -- {{person.name}} -- {{person.age}}
+        </li>
+      </ul>
+      <!-- 
+        handleOrder(1) 绑定函数handleOrder，同时函数接受一个参数 1
+        注意：没有event参数，函数没有调用
+      -->
+      <button @click="handleOrder(1)">年龄升序</button>
+      <button @click="handleOrder(-1)">年龄降序</button>
+      <button @click="handleOrder(0)">原本顺序</button>
+    </div>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      new Vue({
+        el: "#root",
+        data: {
+          searchName: "",
+          orderType: 0,
+          persons: [
+            { id: 1, name: "jack", age: 18 },
+            { id: 2, name: "rose", age: 36 },
+            { id: 3, name: "jerry", age: 20 },
+            { id: 4, name: "tom", age: 22 },
+            { id: 5, name: "liuyuan", age: 10 },
+            { id: 6, name: "lilichao", age: 30 },
+          ],
+        },
+        methods: {
+          handleOrder(orderType) {
+            this.orderType = orderType;
+          },
+        },
+        computed: {
+          // filterPersons计算属性。一旦里面的值发生变化，就会重新执行计算
+          filterPersons() {
+            const { persons, searchName, orderType } = this;
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
+            // 过滤
+            const filterPersons = persons.filter((person) => {
+              // 判断name是否包含searchName
+              // person.name.includes(searchName);
+              // 返回值true保留，返回值false过滤
+              return person.name.indexOf(searchName) > -1;
+            });
 
-</script>
-</body>
+            // 排序: 年龄排序
+            /*
+              orderType: -1 0 1
+                -1 降序
+                0 原本顺序
+                1 升序
+            */
+            switch (orderType) {
+              case -1:
+                filterPersons.sort((a, b) => {
+                  return b.age - a.age; // 降序
+                });
+                break;
+              case 1:
+                filterPersons.sort((a, b) => {
+                  return a.age - b.age; // 升序
+                });
+                break;
+            }
+
+            return filterPersons;
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
