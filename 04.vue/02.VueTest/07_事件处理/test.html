@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>07_事件处理</title>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>07_事件处理</title>
+  </head>
+  <body>
+    <!--
 1. 绑定监听:
   v-on:xxx="fun"
   @xxx="fun"
@@ -15,24 +15,59 @@
 2. 事件修饰符:
   .prevent : 阻止事件的默认行为 event.preventDefault()
   .stop : 停止事件冒泡 event.stopPropagation()
+  更多的事件修饰符：
+    https://cn.vuejs.org/v2/api/#v-on
 3. 按键修饰符
   .keycode : 操作的是某个keycode值的健
   .enter : 操作的是enter键
+  https://cn.vuejs.org/v2/guide/events.html#%E6%8C%89%E9%94%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6
 -->
 
-<div id="example">
+    <div id="example">
+      <h2>1. 绑定监听</h2>
+      <!-- 直接写函数，只能接受一个参数：event -->
+      <button @click="handleClick1">按钮1</button>
+      <!-- 写函数调用的方法（函数实际上没有调用），此时能接受n个参数 -->
+      <button @click="handleClick2(1, 2, 3, 4)">按钮2</button>
+      <!-- 通过$event, 给函数传递event参数 -->
+      <button @click="handleClick3(1, 2, $event)">按钮3</button>
+      <!-- 如果函数只有一条语句，直接写语句（注意没有this） -->
+      <button @click="orderType = 1">按钮4</button>
 
-  <h2>1. 绑定监听</h2>
+      <h2>2. 事件修饰符</h2>
+      <a href="http://www.atguigu.com" @click.prevent.stop="go">跳转</a>
 
-  <h2>2. 事件修饰符</h2>
+      <h2>3. 按键修饰符</h2>
+      <input type="text" @keyup.enter="handleKeyup" />
+      <input type="text" @keyup.13="handleKeyup" />
+    </div>
 
-  <h2>3. 按键修饰符</h2>
-
-</div>
-
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
-
-</script>
-</body>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      new Vue({
+        el: "#example",
+        data: {
+          orderType: 0,
+        },
+        methods: {
+          handleClick1(event) {
+            console.log(event);
+          },
+          handleClick2(a, b, c, d, e) {
+            console.log(a, b, c, d, e);
+          },
+          handleClick3(a, b, event) {
+            console.log(a, b, event);
+          },
+          go(event) {
+            // 禁止事件的默认行为
+            // event.preventDefault();
+          },
+          handleKeyup() {
+            console.log("触发了");
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
