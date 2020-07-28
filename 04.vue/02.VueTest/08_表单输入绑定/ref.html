@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>08_ref</title>
+  </head>
+  <body>
+    <div id="demo">
+      <h1 ref="title">hello ref</h1>
+      <button @click="handleClick" ref="btn">按钮</button>
+    </div>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      // ref 用来获取DOM元素
+      new Vue({
+        el: "#demo",
+        methods: {
+          handleClick() {
+            console.log(this.$refs.title);
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

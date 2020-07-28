@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>09_Vue实例_生命周期</title>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>09_Vue实例_生命周期</title>
+  </head>
+  <body>
+    <!--
 1. vue对象的生命周期
   1). 初始化显示
     * beforeCreate()
@@ -23,11 +23,106 @@
   beforeDestory(): 做收尾工作, 如: 清除定时器
 -->
 
-<div>
+    <div id="demo">
+      <h1 ref="title" id="title" :name="num">hello lifecircle - {{num}}</h1>
+      <button @click="handleClick">按钮</button>
+    </div>
 
-</div>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript">
+      /*
+    生命周期函数：
+      - 概念：从诞生到死亡整个过程依次经历的函数
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript"></script>
-</body>
+
+      1. 初始化阶段（只会执行一次）
+        当你new Vue()时会自动触发
+        beforeCreate
+          在数据代理之前触发的，所以此时还不能使用data中的数据
+        created
+          在数据代理之后触发的，所以此时才可以使用data中的数据
+        beforeMount
+          在模板解析之前触发
+        mounted
+          在模板解析之后触发，此时才能获取到真正的DOM元素
+          注意：如果需要操作DOM，要在mounted和其后才做
+
+      2. 更新阶段（触发n次）
+        当你修改data中的数据，就会触发
+        beforeUpdate
+          在更新之前触发，实际上数据已经更新了
+        updated
+          在更新之后触发，实际上数据已经更新了
+
+      3. 卸载（销毁/死亡）阶段（触发1次）
+        当你 this/vm.$destroy() 就会触发
+
+        beforeDestroy 
+          在卸载之前
+        destroyed
+          在卸载之后
+
+        重要的生命周期：
+          created / mounted
+          - 发送ajax请求
+          - 设置定时器
+          - 绑定特殊事件
+            等一次性任务
+          destroyed
+          做一些收尾工作
+          - 取消ajax请求
+          - 清除定时器
+          - 解绑特殊事件
+            等收尾工作
+
+
+  */
+
+      new Vue({
+        el: "#demo",
+        data: {
+          num: 123,
+        },
+        methods: {
+          handleClick() {
+            // this.num++;
+            this.$destroy();
+          },
+        },
+        // 初始化
+        beforeCreate() {
+          console.log("beforeCreate()", this.num);
+        },
+        created() {
+          console.log("created()", this.num);
+        },
+        beforeMount() {
+          console.log("beforeMount()");
+          console.log(this.$refs.title);
+          console.log(document.querySelector("#title"));
+        },
+        mounted() {
+          console.log("mounted()");
+          console.log(this.$refs.title);
+          console.log(document.querySelector("#title"));
+        },
+        // 更新
+        beforeUpdate() {
+          console.log("beforeUpdate()", this.num);
+          console.log(this.$refs.title);
+        },
+        updated() {
+          console.log("updated()", this.num);
+          console.log(this.$refs.title);
+        },
+        // 卸载
+        beforeDestroy() {
+          console.log('beforeDestroy()', this);
+        },
+        destroyed() {
+          console.log('destroyed()', this);
+        }
+      });
+    </script>
+  </body>
 </html>
