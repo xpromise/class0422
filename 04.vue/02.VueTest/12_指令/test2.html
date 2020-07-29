@@ -28,9 +28,39 @@
   2. 功能类型于v-text, 但转换为全小写
 -->
 
+<div id="demo">
+  <p v-lower-case="msg"></p>
+  <p v-upper-case="msg"></p>
+</div>
+
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
 
+  // 定义全局指令
+  Vue.directive('upper-case', function (el, binding) {
+    el.textContent = binding.value.toUpperCase();
+  })
+
+  new Vue({
+    el: '#demo',
+    data: {
+      msg: 'Hello Atguigu'
+    },
+    directives: {
+      // 自定义局部指令：只能当前实例对象使用
+      // 'lower-case': function () {}
+      'lower-case'(el, binding) {
+        /*
+          el 绑定指令的DOM元素
+          binding 代表指令的信息
+            指令名称 name rawName
+            表达式 expression value
+        */
+        // console.log(el, binding);
+        el.textContent = binding.value.toLowerCase();
+      }
+    }
+  })
 </script>
 </body>
 </html>
