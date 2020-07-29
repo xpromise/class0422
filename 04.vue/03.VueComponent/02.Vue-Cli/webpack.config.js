@@ -43,12 +43,8 @@ module.exports = {
                 type: "src",
                 // Allow to filter some attributes (optional)
                 filter: (tag, attribute, attributes, resourcePath) => {
-                  // The `tag` argument contains a name of the HTML tag.
-                  // The `attribute` argument contains a name of the HTML attribute.
-                  // The `attributes` argument contains all attributes of the tag.
-                  // The `resourcePath` argument contains a path to the loaded HTML file.
-
-                  // choose all HTML tags except img tag
+                  // 过滤除img标签以外的元素
+                  // 只处理img图片
                   return tag.toLowerCase() === "img";
                 },
               },
