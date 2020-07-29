@@ -3,11 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>12_指令_内置指令</title>
-    <style>
-      [v-cloak] {
-        display: none;
-      }
-    </style>
   </head>
   <body>
     <!--
@@ -19,22 +14,12 @@
       v-show : 通过控制display样式来控制显示/隐藏
       v-for : 遍历数组/对象
       v-on : 绑定事件监听, 一般简写为@
+      v-once : 元素只会渲染一次，后续渲染无效
       v-bind : 强制绑定解析表达式, 可以省略v-bind
       v-model : 双向数据绑定
       v-cloak : 使用它防止闪现表达式, 与css配合: [v-cloak] { display: none }
     -->
-    <div id="example">
-      <p v-cloak>{{text}}</p>
-    </div>
-
     <script type="text/javascript" src="../js/vue.js"></script>
-    <script type="text/javascript">
-      new Vue({
-        el: "#example",
-        data: {
-          text: "hello",
-        },
-      });
-    </script>
+    <script type="text/javascript"></script>
   </body>
 </html>
