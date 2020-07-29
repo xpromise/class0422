@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件</title>
+</head>
+<body>
+  <div id="demo">
+    <!-- 使用组件 -->
+    <title-component></title-component>
+    <title-component></title-component>
+    <title-component></title-component>
+    <title-component></title-component>
+  </div>
+  <script src="../../02.VueTest/js/vue.js"></script>
+  <script>
+
+    // 定义组件构造函数
+    const TitleComponent = Vue.extend({
+      // 如果data是对象，直接使用
+      // data: {},
+      // 如果data是函数，会调用函数，使用其返回值
+      data() {
+        return {
+          msg: 'hello component'
+        }
+      },
+      methods: {
+        handleClick() {
+          console.log('handleClick()');
+        }
+      },
+      // 组件的html代码
+      template: '<h1 @click="handleClick">{{msg}}</h1>'
+    })
+
+    new Vue({
+      el: '#demo',
+      components: {
+        // 注册局部组件
+        'title-component': TitleComponent
+      }
+    })
+
+  </script>
+</body>
+</html>
