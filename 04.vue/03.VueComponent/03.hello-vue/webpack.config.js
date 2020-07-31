@@ -1,3 +1,16 @@
+/*
+  问题一：样式没办法正常显示
+    原因：最新的css-loader是4.x.x版本，不能实现
+    解决：要使用css-loader 3.x.x的版本
+      npm i css-loader@3 -D
+
+  问题二：当你修改JS代码，触发 CopyPlugin 的功能
+    原因：会覆盖打包生成的html（ignore没有效果）  
+      copy-webpack-plugin 6.x.x
+    解决： 要使用copy-webpack-plugin 5.x.x的版本
+      npm i copy-webpack-plugin@5 -D 
+
+*/
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // https://vue-loader.vuejs.org/zh/guide/#%E6%89%8B%E5%8A%A8%E8%AE%BE%E7%BD%AE
@@ -18,16 +31,18 @@ module.exports = {
       // 以及 `.vue` 文件中的 `<style>` 块
       {
         test: /\.css$/,
-        include: [ // 包含 src 目录下面的文件：只处理src下面的文件
-          path.resolve(__dirname, 'src')
+        include: [
+          // 包含 src 目录下面的文件：只处理src下面的文件
+          path.resolve(__dirname, "src"),
         ],
         use: ["vue-style-loader", "css-loader"],
       },
       {
         // npm i url-loader file-loader -D
         test: /\.(jpe?g|png|gif|webp)$/,
-        include: [ // 包含 src 目录下面的文件：只处理src下面的文件
-          path.resolve(__dirname, 'src')
+        include: [
+          // 包含 src 目录下面的文件：只处理src下面的文件
+          path.resolve(__dirname, "src"),
         ],
         loader: "url-loader",
         options: {
@@ -60,8 +75,9 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        include: [ // 包含 src 目录下面的文件：只处理src下面的文件
-          path.resolve(__dirname, 'src')
+        include: [
+          // 包含 src 目录下面的文件：只处理src下面的文件
+          path.resolve(__dirname, "src"),
         ],
         loader: "vue-loader",
       },
@@ -82,19 +98,15 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     // 克隆插件
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, "public"),
-          to: path.resolve(__dirname, "dist"),
-          globOptions: {
-            // 忽略 index.html 不复制
-            // 原因：因为 index.html 已经被 HtmlWebpackPlugin 处理过了
-            ignore: ["index.html"],
-          },
-        },
-      ],
-    }),
+    new CopyPlugin([
+      {
+        from: path.resolve(__dirname, "public"),
+        to: path.resolve(__dirname, "dist"),
+        // 忽略 index.html 不复制
+        // 原因：因为 index.html 已经被 HtmlWebpackPlugin 处理过了
+        ignore: ["index.html"],
+      },
+    ]),
   ],
   mode: "development",
   devtool: "eval-cheap-module-source-map",
