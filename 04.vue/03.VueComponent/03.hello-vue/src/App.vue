@@ -11,7 +11,12 @@
       style：css代码
    -->
   <div>
-    <h1 class="title">{{ title }}</h1>
+    <h1 class="title common">{{ title }}</h1>
+    <HelloVue />
+    <HelloVue></HelloVue>
+    <Hello-Vue></Hello-Vue>
+    <hello-vue></hello-vue>
+    <hello-vue />
   </div>
 </template>
 
@@ -27,7 +32,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+/* 
+  全局样式，所有组件都生效 
+  问题：如果其他组件有相同的样式，就会覆盖
+  解决：scoped
+    让样式只在当前组件生效
+*/
 .title {
   color: green;
 }
