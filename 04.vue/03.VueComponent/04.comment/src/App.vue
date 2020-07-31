@@ -13,7 +13,7 @@
     <div class="container">
       <div class="col-md-4">
         <!-- 使用组件 -->
-        <CommentAdd />
+        <CommentAdd :addComment="addComment" />
       </div>
       <div class="col-md-8">
         <!-- 
@@ -21,7 +21,7 @@
           comments="comments" 只会当做普通字符串解析
           :comments="comments" comments就会去组件实例对象上找comments
         -->
-        <CommentList :comments="comments"/>
+        <CommentList :comments="comments" />
       </div>
     </div>
   </div>
@@ -36,10 +36,26 @@ export default {
   data() {
     return {
       comments: [
-        {id: 1, name: 'liuyuan', content: 'i like zly'},
-        {id: 2, name: 'zly', content: 'i like fsf'}
-      ]
-    }
+        { id: 1, name: "liuyuan", content: "i like zly" },
+        { id: 2, name: "zly", content: "i like fsf" },
+      ],
+      id: 3,
+    };
+  },
+  methods: {
+    addComment({ name, content }) {
+      // 更新数据
+      // this.comments.unshift({
+      //   id,
+      //   name: comment.name,
+      //   content: comment.content,
+      // });
+      this.comments.unshift({
+        id: this.id++,
+        name,
+        content,
+      });
+    },
   },
   // 注册局部组件
   components: {

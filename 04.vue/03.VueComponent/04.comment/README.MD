@@ -29,13 +29,18 @@ comments: [{id: 1, name: 'xxx', content: 'yyy'}, {id: 2}, {id: 3}]
 4. 实现功能
 先实现数据的动态展示
 再实现操作数据的功能（添加/修改/删除...）
+  数据源在哪里（App），操作数据的方法就定义在哪里（App）？
+  App组件将 操作数据的方法 传给 CommentAdd，CommentAdd通过调用方法从而更新App组件数据
+
 
 ## 4. 组件通信的方法
 1. props
 适用于父子组件通信
+注意：props传递的数据是只读不修改
 用法：
   1. 父组件 在子组件标签定义属性和值
     <CommentList :comments="comments"/>
+    
   2. 子组件声明接受props
     props: {
       comments: Array
