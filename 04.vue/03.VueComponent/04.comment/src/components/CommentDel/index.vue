@@ -3,13 +3,19 @@
     <div class="handle">
       <a href="javascript:;">删除</a>
     </div>
-    <p class="user"><span>xxx</span><span>说:</span></p>
-    <p class="centence">Vue不错!</p>
+    <p class="user">
+      <span>{{ comment.name }}</span>
+      <span>说:</span>
+    </p>
+    <p class="centence">{{ comment.content }}</p>
   </li>
 </template>
 
 <script>
-export default {};
+export default {
+  // 声明接受props
+  props: ["comment"],
+};
 </script>
 
 <style scoped></style>
