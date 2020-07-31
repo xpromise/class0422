@@ -76,6 +76,7 @@ module.exports = {
     ],
   },
   plugins: [
+    // 自动引入打包生成的JS文件和CSS文件
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "public/index.html"),
     }),

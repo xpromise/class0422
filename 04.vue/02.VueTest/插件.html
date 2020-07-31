@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>插件</title>
+  </head>
+  <body>
+    <div id="demo">
+      <p>{{time | timeFormat}}</p>
+      <p v-upper-case="msg"></p>
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/dayjs/1.8.30/dayjs.min.js"></script>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script src="./plugin.js"></script>
+    <script type="text/javascript">
+      //注册插件
+      Vue.use(plugin);
+      Vue.globalMethod();
+      const vm = new Vue({
+        el: "#demo",
+        data: {
+          time: Date.now(),
+          msg: "Hellogenius",
+        },
+      });
+      vm.$partMethod();
+    </script>
+  </body>
+</html>
