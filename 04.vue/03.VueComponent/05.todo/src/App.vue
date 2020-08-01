@@ -4,7 +4,12 @@
       <TodoHeader :addTodo="addTodo" />
       <!-- 通过props标签属性，给TodoList传递数据 -->
       <TodoList :todos="todos" :delTodo="delTodo" :updateTodo="updateTodo" />
-      <TodoFooter :todoLength="todos.length" :completedNum="completedNum" />
+      <TodoFooter
+        :todoLength="todos.length"
+        :completedNum="completedNum"
+        :updateAllTodo="updateAllTodo"
+        :delCompletedTodos="delCompletedTodos"
+      />
     </div>
   </div>
 </template>
@@ -16,20 +21,16 @@ import TodoFooter from "./components/TodoFooter";
 
 export default {
   data() {
+    // 对todos进行初始化
+    const todos = JSON.parse(localStorage.getItem("todos") || "[]");
     return {
-      todos: [
-        { id: 1, content: "唱", isCheck: false },
-        { id: 2, content: "跳", isCheck: true },
-        { id: 3, content: "rap", isCheck: false },
-        { id: 4, content: "篮球", isCheck: false },
-      ],
-      id: 5,
+      todos,
     };
   },
   methods: {
     addTodo(todo) {
       // ...todo 会展开todo数据，将里面的key/value添加到新对象中
-      this.todos.unshift({ id: this.id++, ...todo });
+      this.todos.unshift({ id: Date.now(), isCheck: false, ...todo });
     },
     delTodo(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
@@ -43,7 +44,17 @@ export default {
         return todo;
       });
     },
+    updateAllTodo(isCheck) {
+      this.todos = this.todos.map((todo) => ({ ...todo, isCheck }));
+    },
+    delCompletedTodos() {
+      this.todos = this.todos.filter((todo) => !todo.isCheck);
+    },
   },
+  /*
+    computed计算属性：不能做异步操作
+    watch监视属性：可以做异步操作
+  */
   computed: {
     // 属性get方法
     completedNum() {
@@ -52,6 +63,13 @@ export default {
         p = p + Number(c.isCheck);
         return p;
       }, 0);
+    },
+  },
+  watch: {
+    // 存储/发送请求...
+    todos(newValue) {
+      // 存在localStorage
+      localStorage.setItem("todos", JSON.stringify(newValue));
     },
   },
   components: {
