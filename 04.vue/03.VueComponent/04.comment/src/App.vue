@@ -21,7 +21,7 @@
           comments="comments" 只会当做普通字符串解析
           :comments="comments" comments就会去组件实例对象上找comments
         -->
-        <CommentList :comments="comments" />
+        <CommentList :comments="comments" :delComment="delComment"/>
       </div>
     </div>
   </div>
@@ -55,6 +55,9 @@ export default {
         name,
         content,
       });
+    },
+    delComment(id) {
+      this.comments = this.comments.filter((comment) => comment.id !== id);
     },
   },
   // 注册局部组件
