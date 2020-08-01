@@ -3,13 +3,17 @@
     <label>
       <input type="checkbox" />
     </label>
-    <span> <span>已完成0</span> / 全部2 </span>
+    <span>
+      <span>已完成{{ completedNum }}</span> / 全部{{ todoLength }}
+    </span>
     <button class="btn btn-danger">清除已完成任务</button>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["todoLength", "completedNum"],
+};
 </script>
 
 <style scoped></style>

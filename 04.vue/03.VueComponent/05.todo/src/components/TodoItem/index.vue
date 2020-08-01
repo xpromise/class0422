@@ -10,7 +10,7 @@
     @mouseleave="isShow = false"
   >
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" v-model="isCheck" />
       <span>{{ todo.content }}</span>
     </label>
     <button class="btn btn-danger" v-show="isShow" @click="handleDel">
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  props: ["todo", "delTodo"],
+  props: ["todo", "delTodo", "updateTodo"],
   data() {
     return {
       isShow: false,
@@ -32,6 +32,17 @@ export default {
       const { id, content } = this.todo;
       if (!confirm(`您确认要删除  ${content}  待办事项吗？`)) return;
       this.delTodo(id);
+    },
+  },
+  computed: {
+    isCheck: {
+      get() {
+        return this.todo.isCheck;
+      },
+      set(val) {
+        // 调用App组件方法的修改
+        this.updateTodo(this.todo.id, val);
+      },
     },
   },
 };

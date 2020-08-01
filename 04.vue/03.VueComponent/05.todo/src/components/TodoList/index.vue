@@ -5,6 +5,7 @@
       :key="todo.id"
       :todo="todo"
       :delTodo="delTodo"
+      :updateTodo="updateTodo"
     />
   </ul>
 </template>
@@ -13,7 +14,7 @@
 import TodoItem from "../TodoItem";
 
 export default {
-  props: ["todos", "delTodo"],
+  props: ["todos", "delTodo", 'updateTodo'],
   components: {
     TodoItem,
   },

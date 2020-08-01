@@ -1,10 +1,10 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <TodoHeader :addTodo="addTodo"/>
+      <TodoHeader :addTodo="addTodo" />
       <!-- 通过props标签属性，给TodoList传递数据 -->
-      <TodoList :todos="todos" :delTodo="delTodo"/>
-      <TodoFooter />
+      <TodoList :todos="todos" :delTodo="delTodo" :updateTodo="updateTodo" />
+      <TodoFooter :todoLength="todos.length" :completedNum="completedNum" />
     </div>
   </div>
 </template>
@@ -18,10 +18,10 @@ export default {
   data() {
     return {
       todos: [
-        { id: 1, content: "唱" },
-        { id: 2, content: "跳" },
-        { id: 3, content: "rap" },
-        { id: 4, content: "篮球" },
+        { id: 1, content: "唱", isCheck: false },
+        { id: 2, content: "跳", isCheck: true },
+        { id: 3, content: "rap", isCheck: false },
+        { id: 4, content: "篮球", isCheck: false },
       ],
       id: 5,
     };
@@ -33,7 +33,26 @@ export default {
     },
     delTodo(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
-    }
+    },
+    updateTodo(id, isCheck) {
+      this.todos = this.todos.map((todo) => {
+        if (todo.id === id) {
+          // 要更新元素
+          return { ...todo, isCheck };
+        }
+        return todo;
+      });
+    },
+  },
+  computed: {
+    // 属性get方法
+    completedNum() {
+      return this.todos.reduce((p, c) => {
+        // p = p + +c.isCheck;
+        p = p + Number(c.isCheck);
+        return p;
+      }, 0);
+    },
   },
   components: {
     TodoHeader,
