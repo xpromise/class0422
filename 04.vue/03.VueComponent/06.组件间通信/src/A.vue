@@ -1,16 +1,18 @@
 <template>
-  <div>
-    <!-- 
-      显示A组件内部的标签
-      slot相当于在使用A组件里面标签内容 h1
-    -->
-    <slot></slot>
-    <p>AAAAAAAAAAA</p>
-  </div>
+  <button @click="add">添加</button>
 </template>
 
 <script>
-export default {};
+import PubSub from "pubsub-js";
+
+export default {
+  methods: {
+    add() {
+      // 触发 $emit
+      PubSub.publish("addPerson", { id: Date.now(), name: "rose" });
+    },
+  },
+};
 </script>
 
 <style scoped></style>

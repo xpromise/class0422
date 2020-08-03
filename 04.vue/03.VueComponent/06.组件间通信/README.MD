@@ -71,15 +71,126 @@ beforeDestroy() {
 
 2. 触发自定义事件
 
-this.$emit('addPerson', xxx)
+this.\$emit('addPerson', xxx)
 
+3. 自定义事件 API
 
-3. 自定义事件API
-- xxx.$on(事件名称, 事件回调函数); 绑定持续性事件
-- xxx.$once(事件名称, 事件回调函数); 绑定一次性事件
-- xxx.$emit(事件名称, ...args); 触发事件
-- xxx.$off(事件名称, 事件回调函数); 解绑事件
+- xxx.\$on(事件名称, 事件回调函数); 绑定持续性事件
+- xxx.\$once(事件名称, 事件回调函数); 绑定一次性事件
+- xxx.\$emit(事件名称, ...args); 触发事件
+- xxx.\$off(事件名称, 事件回调函数); 解绑事件
 
 4. 特点
-给A组件绑定自定义事件，就只有A组件可以触发，其他组件不行
-所以只能父子组件通信，默认不能跨层级通信
+   给 A 组件绑定自定义事件，就只有 A 组件可以触发，其他组件不行
+   所以只能父子组件通信，默认不能跨层级通信
+
+## 总结组件间通信
+
+组件关系：父子 / 祖孙 / 兄弟
+
+1. props
+   适用于父子组件通信
+   父 --> 子 传递一般数据
+   子 --> 父 传递函数数据
+
+- 使用
+  - 父组件通过标签属性传递动态数据 <A :xxx="xxx" />
+  - 子组件需要声明接受属性（三种方式）
+  - 子组件通过 this 直接访问使用
+- 注意：数据只读不修改
+
+2. 自定义事件
+   适用于子 --> 父通信（一般不用）
+
+3. 全局事件总线（自定义事件加强版）
+   适用于祖孙 / 兄弟组件通信
+
+- 使用
+  - 首先将全局事件总线对象（vm）定义到 Vue 的原型对象上
+    - 为了所有实例对象都能够使用
+    ```
+    new Vue({
+      beforeCreate() {
+        Vue.prototype.$bus = this;
+      }
+    })
+    ```
+  - 接受数据方：绑定自定义事件
+  ```
+  mounted() {
+    this.$bus.$on(eventName, callback);
+  },
+  beforeDestroy() {
+    // 注意 callback 必须和绑定事件的 callback 一致
+    this.$bus.$off(eventName, callback);
+  }
+  ```
+  - 发送数据方：触发自定义事件
+  ```
+  this.$bus.$emit(eventName, arg1, arg2...)
+  ```
+
+4. pubsub 消息订阅发布机制（本质上就是自定义事件）
+   适用于祖孙 / 兄弟组件通信（一般不用）
+
+5. 插槽
+   适用于父子组件通信
+   前面 4 种手段都是通信动态数据
+   而插槽通信是带动态数据的标签
+
+父 --> 子 通信是带动态数据的标签
+子 --> 父 通信是动态数据
+
+- 默认插槽
+
+```
+父组件 A：
+<B>
+  <!-- h1就是要传给子组件B的内容 -->
+  <h1>{{title}}</h1>
+</B>
+子组件 B：
+<!-- 使用父组件传递过来的标签数据 -->
+<slot></slot>
+```
+
+- 命名插槽 / 具名插槽
+
+```
+父组件 A：
+<B>
+  <template slot="header">
+    <h1>{{title}}</h1>
+  </template>
+
+  <template v-slot:header>
+    <h1>{{title}}</h1>
+  </template>
+
+  <template #header>
+    <h1>{{title}}</h1>
+  </template>
+</B>
+子组件 B：
+<slot name="header"></slot>
+```
+
+- 作用域插槽
+
+```
+父组件 A：
+<B>
+  <template v-slot:header="slotProps">
+    <h1>{{title}}</h1>
+    <p>{{slotProps.num}}</p>
+  </template>
+
+  <template #header="{ num }">
+    <h1>{{title}}</h1>
+    <p>{{num}}</p>
+  </template>
+</B>
+子组件 B：
+<slot name="header" :num="num"></slot>
+```
+6. vuex(将来学~)
