@@ -1,23 +1,26 @@
 # 组件的通信
+
 1. 传递的数据是只读不修改
 2. 数据源在哪，更新数据的方法就定义在哪，谁要用就把更新方法传给谁
 
 ## props
+
 1. 适用于父子组件通信
-  父 --> 子
-    传递非函数数据，子组件直接使用
-  子 --> 父
-    父给子传递函数数据，子组件调用函数传递数据，父组件就能接收到了
+   父 --> 子
+   传递非函数数据，子组件直接使用
+   子 --> 父
+   父给子传递函数数据，子组件调用函数传递数据，父组件就能接收到了
 2. 用法：
-  1. 父组件 在子组件标签定义属性和值
-    <CommentList :comments="comments"/>
-    
-  2. 子组件声明接受props
-    props: ["comment"],
+3. 父组件 在子组件标签定义属性和值
+   <CommentList :comments="comments"/>
+
+4. 子组件声明接受 props
+   props: ["comment"],
+
 
     props: {
       comments: Array
-    },  
+    },
 
     props: {
       person: {
@@ -43,5 +46,29 @@
         },
       },
     }
-    
-  3. 子组件实例对象上就会添加相应的属性，就可以通过this使用了
+
+3. 子组件实例对象上就会添加相应的属性，就可以通过 this 使用了
+
+## 自定义事件
+
+适用场景：子组件向父组件通信
+
+1. 绑定自定义事件
+
+<Child @addPerson="addPerson"/>
+
+或
+
+<Child ref="child"/>
+mounted() {
+  // 绑定事件
+  this.$refs.child.$on('addPerson', this.addPerson);
+},
+beforeDestroy() {
+  // 解绑事件
+  this.$refs.child.$off('addPerson', this.addPerson);
+},
+
+2. 触发自定义事件
+
+this.$emit('addPerson', xxx)
