@@ -13,6 +13,9 @@ export default {
       this.$emit("addPerson", { id: Date.now(), name: "rose" });
     },
   },
+  mounted() {
+    console.log("Child", this);
+  },
 };
 </script>
 
