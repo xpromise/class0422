@@ -10,8 +10,11 @@ export default {
   methods: {
     add() {
       // 手动触发addPerson自定义事件
-      this.$bus.$emit("addPerson", { id: Date.now(), name: "rose" });
+      this.$emit("addPerson", { id: Date.now(), name: "rose" });
     },
+  },
+  mounted() {
+    console.log("Child", this);
   },
 };
 </script>
