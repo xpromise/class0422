@@ -13,15 +13,10 @@
     <div class="container">
       <div class="col-md-4">
         <!-- 使用组件 -->
-        <CommentAdd :addComment="addComment" />
+        <CommentAdd />
       </div>
       <div class="col-md-8">
-        <!-- 
-          使用props(标签属性)方案，父组件给子组件传递动态数据 
-          comments="comments" 只会当做普通字符串解析
-          :comments="comments" comments就会去组件实例对象上找comments
-        -->
-        <CommentList :comments="comments" :delComment="delComment"/>
+        <CommentList />
       </div>
     </div>
   </div>
