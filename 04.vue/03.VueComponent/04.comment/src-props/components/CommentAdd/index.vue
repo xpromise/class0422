@@ -1,4 +1,9 @@
 <template>
+  <!-- 
+    submit事件 
+    1. 按钮的type类型是submit
+    2. 点击按钮就会触发form表单的submit事件
+  -->
   <form class="form-horizontal" @submit.prevent="submit">
     <div class="form-group">
       <label>用户名</label>
@@ -30,6 +35,7 @@
 
 <script>
 export default {
+  props: ["addComment"],
   data() {
     return {
       name: "",
@@ -38,21 +44,32 @@ export default {
   },
   methods: {
     submit() {
+      // const { name, content } = this;
       const name = this.name.trim();
       const content = this.content.trim();
-      if (!name) {
-        alert("请输入用户名");
-        return;
-      }
-      if (!content) {
-        alert("请输入评论内容");
-        return;
-      }
-      // 添加评论
-      this.$bus.$emit("addComment", { id: Date.now(), name, content });
 
-      this.name = "";
-      this.content = "";
+      if (!name) {
+        // 如果name没有值（空串），就会进来
+        alert("请输入用户名~");
+        return;
+      }
+
+      if (!content) {
+        alert("请输入评论内容~");
+        return;
+      }
+
+      // 添加评论
+      // 要往App中的comments数据添加一条评论
+      // 数据就会更新 --> 用户界面就会更新 --> 更新时就会获取最新的数据去渲染
+      this.addComment({
+        name,
+        content,
+      });
+
+      // 清空数据
+      this.name = '';
+      this.content = '';
     },
   },
 };

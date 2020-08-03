@@ -8,9 +8,6 @@ import App from './App';
 Vue.config.productionTip = false; // 关闭生产提示
 
 new Vue({
-  beforeCreate() {
-    Vue.prototype.$bus = this;
-  },
   // 将App组件渲染到页面上
   render: (h) => h(App)
   // 挂载到 #app 容器中

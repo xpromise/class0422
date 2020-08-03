@@ -7,7 +7,6 @@
         v-for="comment in comments"
         :key="comment.id"
         :comment="comment"
-        :delComment="delComment"
       />
     </ul>
   </div>
@@ -17,21 +16,34 @@
 import CommentDel from "../CommentDel";
 
 export default {
-  // 默认props属性组件不接受，如果需要接受的话，需要手动声明接受
-  props: {
-    // 要声明接受的属性
-    // key 接受的属性 comments
-    // value 接受的属性值的类型 Array
-    // 组件实例对象上就会添加一个属性comments，值为父组件传递过来的值
-    comments: Array,
-    delComment: Function,
+  data() {
+    return {
+      comments: [
+        { id: 1, name: "liuyuan", content: "i like fbb" },
+        { id: 2, name: "fbb", content: "i like lichen" },
+      ],
+    };
+  },
+  methods: {
+    addComment(comment) {
+      this.comments.unshift(comment);
+    },
+    delComment(id) {
+      this.comments = this.comments.filter((comment) => comment.id !== id)
+    }
+  },
+  mounted() {
+    // 绑定事件：更新数据
+    this.$bus.$on("addComment", this.addComment);
+    this.$bus.$on("delComment", this.delComment);
+  },
+  beforeDestroy() {
+    this.$bus.$off("addComment", this.addComment);
+    this.$bus.$off("delComment", this.delComment);
   },
   components: {
     CommentDel,
   },
-  // mounted() {
-  //   console.log(this);
-  // },
 };
 </script>
 

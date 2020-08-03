@@ -13,13 +13,18 @@
 
 <script>
 export default {
-  props: ["comment"],
+  // 声明接受props
+  props: ["comment", "delComment"],
   methods: {
     del() {
-      if (!confirm('您确认要删除当前评论吗?')) return;
-      this.$bus.$emit('delComment', this.comment.id);
-    }
-  }
+      const { name, id } = this.comment;
+      // confirm()会弹出一个弹框
+      // 确认按钮（点击确认返回值true）和取消按钮（点击取消返回值false）
+      if (!confirm(`您确认要删除${name}的评论吗？`)) return;
+      
+      this.delComment(id);
+    },
+  },
 };
 </script>
 

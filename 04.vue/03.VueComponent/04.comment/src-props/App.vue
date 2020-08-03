@@ -33,6 +33,33 @@ import CommentAdd from "./components/CommentAdd";
 import CommentList from "./components/CommentList";
 
 export default {
+  data() {
+    return {
+      comments: [
+        { id: 1, name: "liuyuan", content: "i like zly" },
+        { id: 2, name: "zly", content: "i like fsf" },
+      ],
+      id: 3,
+    };
+  },
+  methods: {
+    addComment({ name, content }) {
+      // 更新数据
+      // this.comments.unshift({
+      //   id,
+      //   name: comment.name,
+      //   content: comment.content,
+      // });
+      this.comments.unshift({
+        id: this.id++,
+        name,
+        content,
+      });
+    },
+    delComment(id) {
+      this.comments = this.comments.filter((comment) => comment.id !== id);
+    },
+  },
   // 注册局部组件
   components: {
     CommentAdd,
