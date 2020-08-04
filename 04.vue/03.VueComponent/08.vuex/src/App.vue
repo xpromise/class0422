@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>clicked: {{ count }} times, count is {{ oddOrEven }}</p>
+    <p>clicked: {{ $store.state.count }} times, count is {{ $store.getters.oddOrEven }}</p>
     <button @click="increment">+</button>
     <button @click="decrement">-</button>
     <button @click="incrementIfOdd">increment if odd</button>
@@ -10,33 +10,21 @@
 
 <script>
 export default {
-  data() {
-    return {
-      count: 0,
-    };
-  },
   methods: {
     increment() {
-      this.count++;
+      // 更新vuex，先要触发actions
+      // actions会自动触发mutations
+      // mutations会更新数据
+      this.$store.dispatch("increment");
     },
     decrement() {
-      this.count--;
+      this.$store.dispatch("decrement");
     },
     incrementIfOdd() {
-      // if (this.count % 2 === 0) return;
-      // 位运算
-      if ((this.count & 1) === 0) return;
-      this.count++;
+      this.$store.dispatch("incrementIfOdd");
     },
     incrementAsync() {
-      setTimeout(() => {
-        this.count++;
-      }, 1000);
-    },
-  },
-  computed: {
-    oddOrEven() {
-      return (this.count & 1) === 0 ? "偶数" : "奇数";
+      this.$store.dispatch("incrementAsync");
     },
   },
 };
