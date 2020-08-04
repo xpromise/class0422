@@ -9,7 +9,6 @@
       copy-webpack-plugin 6.x.x
     解决： 要使用copy-webpack-plugin 5.x.x的版本
       npm i copy-webpack-plugin@5 -D 
-
 */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -125,12 +124,14 @@ module.exports = {
       // '/api': 'http://localhost:3000',
       // '/': 'http://localhost:3000' // 不行，
 
-      '/api': { // 以 /api 开头的请求
-        target: 'http://localhost:3000', // 目标服务器地址
-        pathRewrite: { // 重写路径
-          '^/api': '' // 去掉/api
+      "/api": {
+        // 以 /api 开头的请求
+        target: "http://localhost:3000", // 目标服务器地址
+        pathRewrite: {
+          // 重写路径
+          "^/api": "", // 去掉/api
         },
-        // changeOrigin: true 
+        // changeOrigin: true
       },
 
       // '/api/v3': { // 以 /api 开头的请求
@@ -138,16 +139,16 @@ module.exports = {
       //   pathRewrite: { // 重写路径
       //     '^/api': '' // 去掉/api
       //   },
-      //   changeOrigin: true 
+      //   changeOrigin: true
       // }
-    }
+    },
   },
   resolve: {
     // 自动补全文件扩展名
     extensions: [".js", ".vue", ".json"],
     // 配置路径别名
     alias: {
-      '@assets': path.resolve(__dirname, 'src/assets'),
-    }
+      "@assets": path.resolve(__dirname, "src/assets"),
+    },
   },
 };

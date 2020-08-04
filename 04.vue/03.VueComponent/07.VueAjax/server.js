@@ -1,23 +1,15 @@
 const http = require("http");
 
+const users = require("./users");
+
 http
   .createServer((req, res) => {
     // 设置cors，解决跨域
-    console.log(req.url);
+    // console.log(req.url);
     // res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.setHeader("content-type", "application/json;charset=utf-8");
 
-    const repo = {
-      name: "vue",
-      url: "https://github.com/vue",
-    };
-
-    res.end(
-      JSON.stringify({
-        code: 10000, // 功能成功
-        data: repo, // 成功的数据
-      })
-    );
+    res.end(JSON.stringify(users));
   })
   .listen(3000);
