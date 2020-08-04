@@ -3,7 +3,8 @@ const http = require("http");
 http
   .createServer((req, res) => {
     // 设置cors，解决跨域
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    console.log(req.url);
+    // res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.setHeader("content-type", "application/json;charset=utf-8");
 

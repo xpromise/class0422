@@ -22,7 +22,7 @@ export default {
     this.isLoading = true;
     // 发送请求、设置定时器等一次性任务
     axios
-      .get("http://localhost:3000")
+      .get("http://localhost:9527/api")
       .then((res) => {
         console.log(res.data); // 才是响应数据
         // 请求成功

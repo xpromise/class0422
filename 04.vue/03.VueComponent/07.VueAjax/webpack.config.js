@@ -119,6 +119,28 @@ module.exports = {
     open: true,
     compress: true,
     hot: true, // 开启HMR功能：提升打包构建速度
+    // 开启代理服务器, 设置目标服务器地址 'http://localhost:3000'
+    proxy: {
+      // 当你请求地址以/api开头，会转发到 http://localhost:3000
+      // '/api': 'http://localhost:3000',
+      // '/': 'http://localhost:3000' // 不行，
+
+      '/api': { // 以 /api 开头的请求
+        target: 'http://localhost:3000', // 目标服务器地址
+        pathRewrite: { // 重写路径
+          '^/api': '' // 去掉/api
+        },
+        // changeOrigin: true 
+      },
+
+      // '/api/v3': { // 以 /api 开头的请求
+      //   target: 'http://localhost:4000', // 目标服务器地址
+      //   pathRewrite: { // 重写路径
+      //     '^/api': '' // 去掉/api
+      //   },
+      //   changeOrigin: true 
+      // }
+    }
   },
   resolve: {
     // 自动补全文件扩展名
