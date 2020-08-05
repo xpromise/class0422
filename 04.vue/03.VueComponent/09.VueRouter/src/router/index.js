@@ -5,6 +5,7 @@ import Home from "../pages/home";
 import About from "../pages/about";
 import Messages from "../pages/messages";
 import News from "../pages/news";
+import Detail from "../pages/detail";
 
 // 安装插件 --> 扩展了两个全局组件
 Vue.use(VueRouter);
@@ -19,18 +20,33 @@ const router = new VueRouter({
       children: [
         // 嵌套路由 / 子路由
         {
-          path: '/home/messages',
-          component: Messages
+          path: "/home/messages",
+          component: Messages,
+          children: [
+            {
+              /*
+                正常path-component是 1对1的关系
+                  一个路径对应一个组件
+                需求：多个路径对应一个组件  
+                  '/home/messages/detail/xxx' 地址就是写死的
+                    xxx只能匹配xxx地址
+                  '/home/messages/detail/:xxx' 地址就是动态的
+                    :xxx能匹配任意地址
+              */
+              path: '/home/messages/detail/:id',
+              component: Detail
+            }
+          ]
         },
         {
           /*
             news --> /home/news
             /news --> /news
           */
-          path: 'news', 
-          component: News
+          path: "news",
+          component: News,
         },
-      ]
+      ],
     },
     {
       path: "/about",

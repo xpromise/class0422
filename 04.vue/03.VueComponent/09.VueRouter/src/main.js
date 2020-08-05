@@ -9,6 +9,7 @@ Vue.config.productionTip = false;
 new Vue({
   render: (h) => h(App),
   // 注入router，所有组件实例对象就可以使用
+  // this.$route / this.$router
   router
 }).$mount("#app");
 
