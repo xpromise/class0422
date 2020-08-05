@@ -33,10 +33,20 @@ const router = new VueRouter({
                   '/home/messages/detail/:xxx' 地址就是动态的
                     :xxx能匹配任意地址
               */
-              path: '/home/messages/detail/:id',
-              component: Detail
-            }
-          ]
+              path: "/home/messages/detail/:id",
+              component: Detail,
+              // 命名路由：给路由取一个名字（将来通过名称使用路由）
+              name: "detail",
+              props: function(route) {
+                console.log("router", route); // $route
+                // 返回值对象，对象里面的数据就会以props方式传递到当前组件中
+                return {
+                  ...route.params,
+                  ...route.query
+                };
+              },
+            },
+          ],
         },
         {
           /*

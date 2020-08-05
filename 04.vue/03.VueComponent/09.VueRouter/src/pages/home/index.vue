@@ -13,7 +13,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ['sex'],
+  created() {
+    console.log("home", this);
+  },
+};
 </script>
 
 <style scoped></style>

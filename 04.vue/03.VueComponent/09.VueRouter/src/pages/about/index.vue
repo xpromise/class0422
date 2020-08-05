@@ -5,7 +5,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["sex"],
+  created() {
+    console.log("about", this);
+  },
+};
 </script>
 
 <style scoped></style>

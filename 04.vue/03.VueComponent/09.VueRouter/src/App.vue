@@ -41,7 +41,7 @@
       <div class="col-xs-6">
         <div class="panel">
           <div class="panel-body">
-            <router-view></router-view>
+            <router-view sex="男"></router-view>
           </div>
         </div>
       </div>

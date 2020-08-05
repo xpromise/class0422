@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  props: ["sex", "id", "name", "age"],
   data() {
     return {
       detail: {},
@@ -15,6 +16,7 @@ export default {
   },
   created() {
     console.log("created");
+    console.log("detail", this);
     setTimeout(() => {
       // 模拟请求的结果
       const messages = [
