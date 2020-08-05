@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 
 import Home from "../pages/home";
 import About from "../pages/about";
+import Messages from "../pages/messages";
+import News from "../pages/news";
 
 // 安装插件 --> 扩展了两个全局组件
 Vue.use(VueRouter);
@@ -14,6 +16,21 @@ const router = new VueRouter({
     {
       path: "/home", // 路由路径 -- 访问路径
       component: Home, // 路由组件，当地址变成 /home 要加载的组件
+      children: [
+        // 嵌套路由 / 子路由
+        {
+          path: '/home/messages',
+          component: Messages
+        },
+        {
+          /*
+            news --> /home/news
+            /news --> /news
+          */
+          path: 'news', 
+          component: News
+        },
+      ]
     },
     {
       path: "/about",

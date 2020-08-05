@@ -15,12 +15,27 @@
               特点：
                 1. 点击不会刷新页面，也不会发送请求
                 2. 只会更新浏览器地址 path
+
+              以下两个样式，当你选中router-link生效
+                exact-active-class 
+                  默认值：router-link-exact-active 
+                active-class 
+                  默认值：router-link-active
+
             <router-view></router-view> 
               根据 浏览器地址 path 的变化，加载相应的组件显示
               注意：需要加载的组件要在router配置中写好
            -->
-          <router-link class="list-group-item" to="/about">About</router-link>
-          <router-link class="list-group-item" to="/home">Home</router-link>
+          <router-link
+            class="list-group-item"
+            active-class="active"
+            to="/about"
+          >
+            About
+          </router-link>
+          <router-link class="list-group-item" active-class="active" to="/home">
+            Home
+          </router-link>
         </div>
       </div>
       <div class="col-xs-6">
@@ -38,4 +53,8 @@
 export default {};
 </script>
 
-<style scoped></style>
+<style scoped>
+/* .router-link-active {
+  color: red !important;
+} */
+</style>
