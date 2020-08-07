@@ -28,6 +28,17 @@
         vm._data = options.data 代表原属性
         vm.msg 进行了数据代理后的属性
           操作代理后的属性，实际上就是操作_data（原属性）
+
+        数据代理：会将data中的属性代理到实例对象vm上
+        作用：方便我们操作data数据
+
+        原理：
+          1. 将options中data数据赋值给实例对象._data
+          2. 遍历data数据，取出所有属性，进行数据代理
+          3. 数据代理就是通过Object.defineProperty给实例对象
+            添加data中属性，值通过get/set重新定义读和写方法
+            get/set中实际上就是对_data中的数据（也就是原数据）进行操作
+          4. 此时我们就能通过实例对象直接操作data中的数据  
       */
       const vm = new MVVM({
         el: "#app",
