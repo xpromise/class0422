@@ -20,7 +20,8 @@ module.exports = {
   entry: "./src/main.js",
   output: {
     path: undefined,
-    filename: "js/[name].js",
+    filename: "js/[name].js", // 只能写相对路径
+    publicPath: '/' // 给所有打包输出路径都加上 /
   },
   module: {
     rules: [
@@ -142,6 +143,8 @@ module.exports = {
       //   changeOrigin: true
       // }
     },
+    // 当使用 HTML5 History API 时, 所有的 404 请求都会响应 index.html 的内容。
+    historyApiFallback: true,
   },
   resolve: {
     // 自动补全文件扩展名

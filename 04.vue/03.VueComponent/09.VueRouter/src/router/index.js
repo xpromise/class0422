@@ -11,6 +11,8 @@ import Detail from "../pages/detail";
 Vue.use(VueRouter);
 
 const router = new VueRouter({
+  // mode: "hash",
+  mode: "history",
   routes: [
     // 放置所有路由的配置
     // 每个路由配置都是一个对象
