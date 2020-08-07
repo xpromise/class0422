@@ -41,7 +41,19 @@
       <div class="col-xs-6">
         <div class="panel">
           <div class="panel-body">
-            <router-view sex="男"></router-view>
+            <!-- 
+              keep-alive
+                适用场景：组件内部数据不需要实时更新
+                优点：性能好
+
+              include: "组件名称" 只缓存指定组件
+              exclude: "组件名称" 除了指定组件以外，其他组件都缓存
+              注意：组件名称要去组件内部通过name指定
+            -->
+            <keep-alive exclude="home">
+              <!-- 负责根据path加载指定路由组件 -->
+              <router-view sex="男"></router-view>
+            </keep-alive>
           </div>
         </div>
       </div>

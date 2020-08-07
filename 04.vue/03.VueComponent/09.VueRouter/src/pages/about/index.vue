@@ -6,9 +6,13 @@
 
 <script>
 export default {
+  name: "about",
   props: ["sex"],
   created() {
-    console.log("about", this);
+    console.log("about created");
+  },
+  beforeDestroy() {
+    console.log("about beforeDestroy");
   },
 };
 </script>

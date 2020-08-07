@@ -17,6 +17,7 @@ const router = new VueRouter({
     {
       path: "/home", // 路由路径 -- 访问路径
       component: Home, // 路由组件，当地址变成 /home 要加载的组件
+      name: "home", // 给路由取名字
       children: [
         // 嵌套路由 / 子路由
         {
@@ -42,7 +43,7 @@ const router = new VueRouter({
                 // 返回值对象，对象里面的数据就会以props方式传递到当前组件中
                 return {
                   ...route.params,
-                  ...route.query
+                  ...route.query,
                 };
               },
             },

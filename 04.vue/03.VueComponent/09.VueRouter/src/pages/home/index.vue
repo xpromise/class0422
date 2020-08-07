@@ -14,10 +14,14 @@
 
 <script>
 export default {
+  name: 'home', // 给组件取名字
   props: ['sex'],
   created() {
-    console.log("home", this);
+    console.log("home created");
   },
+  beforeDestroy() {
+    console.log('home beforeDestroy');
+  }
 };
 </script>
 
