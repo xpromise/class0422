@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>02_数据代理_vue</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>02_数据代理_vue</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{msg}}</p>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      /*
+        数据代理:
+          会将data中的属性代理到实例对象vm上
+          作用：方便我们操作data数据
+      */
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          msg: "hello vue",
+        },
+      });
+      
+      console.log(vm.msg);
 
-
-</body>
+      console.log(vm._data.msg);
+    </script>
+  </body>
 </html>
