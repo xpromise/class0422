@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>响应式</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{msg}}</p>
+      <!-- <p>{{name}}</p> -->
+      <ul>
+        <li v-for="(value, key) in person">
+          {{key}} : {{value}}
+        </li>
+      </ul>
+      <ul>
+        <li v-for="person in persons" :key="person.id">
+          {{person.id}} -- {{person.name}}
+        </li>
+      </ul>
+      <button @click="test1">按钮1</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      /*
+      1. 什么是响应式（reactive）数据？
+        读取时可以读取其值
+        设置时即可以更新数据，也会更新用户界面
+
+        data里面的数据
+        - 基本数据类型
+          注意：直接往this上添加属性，不是响应式数据
+        - 引用数据类型：object
+          data中的对象里面已存在数据是响应式
+          新添加不是
+            手动添加响应式数据
+            this.$set(this.person, 'age', 18);
+            Vue.set(this.person, 'age', 18);
+          结论：要是用响应式数据，一般建议先定义好  
+        - 引用数据类型：array
+          data中的数据里面已存在数据是响应式
+          直接通过下标去赋值，就不是
+            this.persons[1] = { id: 2, name: "rose" }; // 不是响应式
+          结论：不要通过下标操作数组数据
+
+    */
+
+      new Vue({
+        el: "#app",
+        data() {
+          // this.name = "jack"; // 不是响应式
+          return {
+            msg: "hello vue",
+            person: {
+              name: "jack",
+              age: 18,
+            },
+            persons: [
+              { id: 1, name: "jack" },
+              { id: 3, name: "tom" },
+            ],
+          };
+        },
+        methods: {
+          test1() {
+            // 基本类型
+            // this.msg += "~~~";
+            // this.name = "rose";
+
+            // 对象
+            // this.person.name = "rose";
+            // this.person = {name: 'rose', age: 16};
+            // this.person.age = 18; // 不是响应式
+            // 手动添加响应式数据
+            // this.$set(this.person, 'age', 18);
+            // Vue.set(this.person, 'age', 18)
+
+            // 数组
+            // 添加
+            // 变异方法：重新数组的方法，更新时不但更新数据，还更新用户界面
+            // this.persons.unshift({ id: 2, name: "rose" });
+            // this.persons.push({ id: 2, name: "rose" });
+            // 建议：不要通过下标操作数组数据
+            // this.persons[1] = { id: 2, name: "rose" }; // 不是响应式
+            // this.persons[0].name = "rose";
+            // 知道下标
+            // this.persons.splice(1, 0, { id: 2, name: "rose" });
+            // 不知道下标
+            // this.persons = this.persons.reduce((p, c) => {
+            //   if (c.id === 3) {
+            //     return [...p, { id: 2, name: "rose" }, c];
+            //   }
+            //   return [...p, c];
+            // }, []);
+            // 更新
+            // this.persons = this.persons.map((person) => {
+            //   if (person.id === 3) {
+            //     return {
+            //       ...person,
+            //       name: "rose",
+            //     };
+            //   }
+            //   return person;
+            // });
+            // 删除
+            this.persons = this.persons.filter((person) => {
+              // if (person.id === 3) {
+              //   return false;
+              // }
+              // return true;
+
+              return person.id !== 3
+            });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

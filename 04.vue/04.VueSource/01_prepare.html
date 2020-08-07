@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <div id="test">尚硅谷IT教育</div>
+
+    <div id="demo">
+      <ul>
+        <li>test1</li>
+        <li>test2</li>
+        <li>test3</li>
+      </ul>
+    </div>
+
+    <!--
+      1. [].slice.call(lis): 将伪数组转换为真数组
+      2. node.nodeType: 得到节点类型
+      3. Object.defineProperty(obj, propertyName, {}): 给对象添加属性(指定描述符)
+      4. Object.keys(obj): 得到对象自身可枚举属性组成的数组
+      5. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
+      6. DocumentFragment: 文档碎片(高效批量更新多个节点)
+      -->
+
+    <script type="text/javascript">
+      /*
+        1. [].slice.call(lis): 将伪数组转换为真数组
+      */
+      const arr1 = [1, 2, 3, 4];
+      // 内部通过this找到要复制的数组
+      console.log(arr1.slice(0, 3));
+
+      // 伪数组
+      const lis = document.querySelectorAll("li");
+      console.log(lis);
+
+      // ES5：将伪数组转换为真数组
+      console.log([].slice.call(lis));
+      console.log(Array.prototype.slice.call(lis));
+      // console.log(lis.slice()); // lis上面没有slice方法
+
+      // ES6：将伪数组转换为真数组
+      console.log(Array.from(lis));
+
+    </script>
+  </body>
+</html>
