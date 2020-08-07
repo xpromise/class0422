@@ -44,6 +44,77 @@
       // ES6：将伪数组转换为真数组
       console.log(Array.from(lis));
 
+      /*
+       node.nodeType 代表节点的类型
+        1 元素节点
+        3 文本节点
+      */
+      console.log(lis[0].nodeType); // 1
+      console.log(lis[0].firstChild.nodeType); // 3
+
+      // 3. Object.defineProperty(obj, propertyName, {}): 给对象添加属性(指定描述符)
+
+      const person = {
+        firstName: "jack",
+        lastName: "ma",
+      };
+
+      Object.defineProperty(person, "fullName", {
+        configurable: false, // 是否可以重新配置/删除
+        enumerable: true, // 是否可以被for in遍历
+        get() {
+          return this.firstName + " " + this.lastName;
+        },
+        set(val) {
+          const [firstName, lastName] = val.split(" ");
+          this.firstName = firstName;
+          this.lastName = lastName;
+        },
+      });
+
+      console.log(person);
+
+      // 得到对象自身可枚举属性组成的数组
+      console.log(Object.keys(person));
+      console.log(Object.values(person));
+
+      // 5. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
+
+      const obj = { a: 1 };
+      obj.__proto__.b = 2;
+
+      // for in 默认会遍历原型上的属性
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          console.log(key);
+        }
+      }
+
+      // 6. DocumentFragment: 文档碎片(高效批量更新多个节点)
+      const demo = document.getElementById("demo");
+
+      // 创建文档碎片（存储DOM元素容器）
+      const fragment = document.createDocumentFragment();
+
+      // let child = demo.firstChild;
+      let child;
+      // 每次先执行 child = demo.firstChild
+      // 然后在判断 child 有没有值
+      while ((child = demo.firstChild)) {
+        fragment.appendChild(child);
+      }
+      // 找到li
+      const list = fragment.children[0].children;
+      // 变成真数组
+      const arr = [].slice.call(list);
+
+      arr.forEach((li) => {
+        // 这里DOM操作是在fragment中操作
+        // 是在内存中操作
+        li.textContent = "hello " + li.textContent;
+      });
+
+      demo.appendChild(fragment);
     </script>
   </body>
 </html>
