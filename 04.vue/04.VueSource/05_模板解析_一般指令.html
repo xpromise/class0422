@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>05_模板解析_一般指令</title>
-</head>
-<body>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>05_模板解析_一般指令</title>
+    <style>
+      .red {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <p v-text="msg"></p>
+      <p v-html="msg"></p>
+      <p v-class="className" class="green">hello mvvm</p>
+    </div>
+    <script src="./js/observer.js"></script>
+    <script src="./js/watcher.js"></script>
+    <script src="./js/compile.js"></script>
+    <script src="./js/mvvm.js"></script>
+    <script>
+      new MVVM({
+        // el: "#app",
+        el: document.getElementById("app"),
+        data: {
+          msg: "<span>hello mvvm</span>",
+          className: "red",
+        },
+      });
+    </script>
+  </body>
 </html>

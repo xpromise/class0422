@@ -21,6 +21,7 @@ function MVVM(options) {
   // 代理计算属性
   this._initComputed();
 
+  // 数据劫持（数据绑定）
   observe(data, this);
   // 模板解析
   this.$compile = new Compile(options.el || document.body, this);

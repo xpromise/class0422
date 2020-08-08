@@ -88,11 +88,11 @@ Compile.prototype = {
         var exp = attr.value;
         // 截取2位得到 on:click
         var dir = attrName.substring(2);
-        // 判断是否是事件指令
+        // 判断是否是事件指令 v-on
         if (me.isEventDirective(dir)) {
           // 事件处理
           compileUtil.eventHandler(node, me.$vm, exp, dir);
-          // 普通指令
+          // 普通指令 v-text v-html v-class v-model
         } else {
           compileUtil[dir] && compileUtil[dir](node, me.$vm, exp);
         }
@@ -156,6 +156,7 @@ var compileUtil = {
     this.bind(node, vm, exp, "class");
   },
 
+  // 统一解析指令的函数（除了事件）
   // node 文本节点
   // vm 实例对象
   // exp 表达式
@@ -181,7 +182,7 @@ var compileUtil = {
   eventHandler: function (node, vm, exp, dir) {
     // 获取事件名 click
     var eventType = dir.split(":")[1],
-      // 获取事件回调函数 
+      // 获取事件回调函数
       fn = vm.$options.methods && vm.$options.methods[exp];
 
     if (eventType && fn) {

@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>06_数据劫持-数据绑定</title>
-  <!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>06_数据劫持-数据绑定</title>
+    <!--
     1. 数据绑定
       * 初始化显示: 页面(表达式/指令)能从data读取数据显示 (编译/解析)
       * 更新显示: 更新data中的属性数据==>页面更新
-  -->
-</head>
-<body>
-</body>
-
+  --></head>
+  <body>
+    <div id="app">
+      <p>{{msg}}</p>
+      <button v-on:click="handleClick">按钮</button>
+    </div>
+    <script src="./js/observer.js"></script>
+    <script src="./js/watcher.js"></script>
+    <script src="./js/compile.js"></script>
+    <script src="./js/mvvm.js"></script>
+    <script>
+      new MVVM({
+        // el: "#app",
+        el: document.getElementById("app"),
+        data: {
+          msg: "hello mvvm",
+        },
+        methods: {
+          handleClick() {
+            this.msg += "~~~~";
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
