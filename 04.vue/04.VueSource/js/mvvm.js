@@ -22,7 +22,7 @@ function MVVM(options) {
   this._initComputed();
 
   observe(data, this);
-
+  // 模板解析
   this.$compile = new Compile(options.el || document.body, this);
 }
 
