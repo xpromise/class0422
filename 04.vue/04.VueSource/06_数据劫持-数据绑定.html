@@ -10,6 +10,8 @@
   --></head>
   <body>
     <div id="app">
+      <p>{{person.name}}</p>
+      <p v-html="msg"></p>
       <p>{{msg}}</p>
       <button v-on:click="handleClick">按钮</button>
     </div>
@@ -23,6 +25,9 @@
         el: document.getElementById("app"),
         data: {
           msg: "hello mvvm",
+          person: {
+            name: "jack",
+          },
         },
         methods: {
           handleClick() {
@@ -30,6 +35,8 @@
           },
         },
       });
+
+
     </script>
   </body>
 </html>
