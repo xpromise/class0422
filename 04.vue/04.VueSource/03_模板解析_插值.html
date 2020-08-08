@@ -13,6 +13,21 @@
     <script src="./js/compile.js"></script>
     <script src="./js/mvvm.js"></script>
     <script>
+      /*
+        模板解析-插值语法
+          1. 将元素节点转换成文档碎片节点
+            遍历el元素所有子节点，添加到fragment中
+          2. 解析模板
+            遍历fragment中所有子节点，
+              判断是否是文本节点（nodeType == 3）并且里面文本内容是否有插值语法
+              如果都满足，就进行插值语法解析（普通文本不用解析）
+              插值语法解析：  
+                通过正则取出插值语法中表达式，然后去this上获取对应表达式的值
+                然后给node设置textContent属性，值为表达式的值（此时插值语法就解析完毕了）
+              如果当前节点还有子节点，继续递归编译~
+          3. 将模板解析后的文档碎片节点添加到el容器中生效
+      */
+
       new MVVM({
         // el: "#app",
         el: document.getElementById("app"),
