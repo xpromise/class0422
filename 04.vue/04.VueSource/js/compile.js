@@ -169,6 +169,8 @@ var compileUtil = {
     // 调用更新函数 textUpdater 来更新节点内容
     updaterFn && updaterFn(node, this._getVMVal(vm, exp));
 
+    // 所有指令（除了事件指令）和插值语法都有watcher
+    // 第三个参数是cb，更新用户界面方法
     new Watcher(vm, exp, function (value, oldValue) {
       updaterFn && updaterFn(node, value, oldValue);
     });

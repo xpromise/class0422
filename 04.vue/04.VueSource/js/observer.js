@@ -33,6 +33,7 @@ Observer.prototype = {
             configurable: false, // 不能再define
             get: function() {
                 if (Dep.target) {
+                    // 建立dep和watcher的关系
                     dep.depend();
                 }
                 return val;
@@ -41,10 +42,13 @@ Observer.prototype = {
                 if (newVal === val) {
                     return;
                 }
+                // 更新data数据
                 val = newVal;
                 // 新的值是object的话，进行监听
+                // 新的数据劫持
                 childObj = observe(newVal);
                 // 通知订阅者
+                // 通知数据的dep对应所有的watcher，调用cb来更新用户界面
                 dep.notify();
             }
         });
@@ -63,7 +67,9 @@ function observe(value, vm) {
 var uid = 0;
 
 function Dep() {
+    // 唯一id
     this.id = uid++;
+    // 保存watcher的容器
     this.subs = [];
 }
 
@@ -73,6 +79,8 @@ Dep.prototype = {
     },
 
     depend: function() {
+        // Dep.target 是 watcher
+        // watcher.addDep(dep)
         Dep.target.addDep(this);
     },
 
@@ -84,7 +92,9 @@ Dep.prototype = {
     },
 
     notify: function() {
+        // 遍历watcher
         this.subs.forEach(function(sub) {
+            // 调用watcher.update
             sub.update();
         });
     }
