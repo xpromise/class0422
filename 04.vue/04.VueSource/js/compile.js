@@ -128,14 +128,15 @@ Compile.prototype = {
 
 // 指令处理集合
 var compileUtil = {
+  // v-text 和 插值语法
   text: function (node, vm, exp) {
     this.bind(node, vm, exp, "text");
   },
-
+  // v-html
   html: function (node, vm, exp) {
     this.bind(node, vm, exp, "html");
   },
-
+  // v-model
   model: function (node, vm, exp) {
     this.bind(node, vm, exp, "model");
 
@@ -151,7 +152,7 @@ var compileUtil = {
       val = newValue;
     });
   },
-
+  // v-class
   class: function (node, vm, exp) {
     this.bind(node, vm, exp, "class");
   },
@@ -177,6 +178,7 @@ var compileUtil = {
   },
 
   // 事件处理
+  // v-on
   // node 元素 button
   // vm 实例对象
   // exp 指令表达式 handleClick

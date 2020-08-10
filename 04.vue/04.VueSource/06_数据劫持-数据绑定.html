@@ -20,6 +20,24 @@
     <script src="./js/compile.js"></script>
     <script src="./js/mvvm.js"></script>
     <script>
+      /*
+        响应式原理：
+          1. 数据代理 --> 将data原数据代理的this
+            通过this访问数据，实际上操作是data原数据
+          2. 数据劫持 --> 重新定义data原数据，将其定义成响应式
+            遍历data中所有数据（如果是对象，还要递归遍历）
+            将其定义成响应式数据（每一个响应式数据都会生成dep）
+          3. 模板解析
+            元素节点 --> 解析指令语法
+              事件指令 --> 绑定事件监听
+              一般指令 --> 更新DOM，new Watcher（更新DOM的方法）
+                new Watcher就会建立dep和watcher联系
+                  你中有我，我中有你（watcher保存dep，dep保存watcher）
+          4. 将来更新this上响应式数据
+            触发数据的代理的set --> 触发数据劫持set --> 
+              更新数据
+              dep方法通知所有watcher来更新用户界面        
+      */
       new MVVM({
         // el: "#app",
         el: document.getElementById("app"),

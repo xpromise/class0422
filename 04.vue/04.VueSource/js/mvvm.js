@@ -11,7 +11,7 @@ function MVVM(options) {
   // 缓存this，为了后面函数可以使用
   var me = this;
 
-  // 数据代理
+  // 数据代理：将data中数据代理到this上
   // 遍历data数据提取所有key，对其数据代理
   Object.keys(data).forEach(function (key) {
     // 数据代理的方法
@@ -21,9 +21,11 @@ function MVVM(options) {
   // 代理计算属性
   this._initComputed();
 
-  // 数据劫持（数据绑定）
+  // 数据劫持（数据绑定）：将data数据（_data, 原数据）重新定义，定义成响应式
   observe(data, this);
-  // 模板解析
+  // 模板解析：
+  // 1. 将插值语法/指令语法解析
+  // 2. new Watcher建立dep和watcher建立联系，才能变成响应式
   this.$compile = new Compile(options.el || document.body, this);
 }
 

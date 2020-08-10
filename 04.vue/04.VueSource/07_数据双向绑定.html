@@ -1,9 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>07_数据双向绑定</title>
-</head>
-<body>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>07_数据双向绑定</title>
+  </head>
+  <body>
+    <div id="app">
+      <input v-model="person.name" />
+      <!-- <input type="text" v-on:input="handleInput" /> -->
+      <p>{{msg}}</p>
+    </div>
+    <script src="./js/observer.js"></script>
+    <script src="./js/watcher.js"></script>
+    <script src="./js/compile.js"></script>
+    <script src="./js/mvvm.js"></script>
+    <script>
+      /*
+        双向数据绑定原理：
+          1. 数据能从data流向页面
+            直接给元素绑定value
+          2. 数据也能从页面流向data
+            给元素绑定input事件，在事件中收集用户输入的数据
+            更新到相应的响应式数据上（一旦更新响应式数据，用户界面也会更新）
+       */
+      new MVVM({
+        // el: "#app",
+        el: document.getElementById("app"),
+        data: {
+          msg: "hello mvvm",
+        },
+        methods: {
+          // handleInput(e) {
+          //   // console.log(e.data); // 当前输入的值
+          //   console.log(e.target.value); // 所有值
+          //   this.msg = e.target.value;
+          // },
+        },
+      });
+    </script>
+  </body>
 </html>
