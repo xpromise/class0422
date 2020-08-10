@@ -24,7 +24,7 @@ module.exports = {
   output: {
     path: undefined,
     filename: "js/[name].js", // 只能写相对路径
-    publicPath: '/' // 给所有打包输出路径都加上 /
+    publicPath: "/", // 给所有打包输出路径都加上 /
   },
   module: {
     rules: [
@@ -35,7 +35,7 @@ module.exports = {
       {
         test: /\.css$/,
         // include: [
-          // 包含 src 目录下面的文件：只处理src下面的文件
+        // 包含 src 目录下面的文件：只处理src下面的文件
         //   path.resolve(__dirname, "src"),
         // ],
         use: ["vue-style-loader", "css-loader"],
@@ -93,23 +93,35 @@ module.exports = {
         loader: "babel-loader",
         options: {
           // elementUI按需加载
-          "presets": ["@babel/preset-env"],
-          "plugins": [
+          presets: ["@babel/preset-env"],
+          plugins: [
+            // elementui
+            // [
+            //   "component",
+            //   {
+            //     libraryName: "element-ui",
+            //     styleLibraryName: "theme-chalk",
+            //   },
+            // ],
+
+            // vant
             [
-              "component",
+              "import",
               {
-                "libraryName": "element-ui",
-                "styleLibraryName": "theme-chalk"
-              }
-            ]
-          ]
-        }
+                libraryName: "vant",
+                libraryDirectory: "es",
+                style: true,
+              },
+              "vant",
+            ],
+          ],
+        },
       },
       {
-        loader: 'file-loader', 
-        // 只处理字体图标 .ttf .woff  
-        exclude: /\.(css|js|vue|html|jpe?g|png|gif|webp)$/
-      }
+        loader: "file-loader",
+        // 只处理字体图标 .ttf .woff
+        exclude: /\.(css|js|vue|html|jpe?g|png|gif|webp)$/,
+      },
     ],
   },
   plugins: [

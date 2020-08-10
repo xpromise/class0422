@@ -1,16 +1,14 @@
 <template>
   <div>
-    <el-button>默认按钮</el-button>
-    <el-button type="primary" circle @click="handleClick">经典按钮</el-button>
-    <el-button type="danger" round>危险按钮</el-button>
-    <el-button type="primary" icon="el-icon-user" circle></el-button>
-    <el-button type="text">纯文字按钮</el-button>
+    <van-button>默认按钮</van-button>
+    <van-button type="primary" @click="handleClick">成功按钮</van-button>
 
-    <el-carousel trigger="click" height="150px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3 class="small">{{ item }}</h3>
-      </el-carousel-item>
-    </el-carousel>
+    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="pink">
+      <van-swipe-item>1</van-swipe-item>
+      <van-swipe-item>2</van-swipe-item>
+      <van-swipe-item>3</van-swipe-item>
+      <van-swipe-item>4</van-swipe-item>
+    </van-swipe>
   </div>
 </template>
 
@@ -18,12 +16,11 @@
 export default {
   methods: {
     handleClick() {
-      // console.log(111);
-      // console.log(this);
-      this.$message({
-        message: "恭喜你，这是一条成功消息",
-        type: "success",
-        duration: 1000,
+      this.$notify({
+        message: "自定义颜色",
+        color: "green",
+        background: "pink",
+        duration: 3000,
       });
     },
   },
@@ -31,19 +28,11 @@ export default {
 </script>
 
 <style scoped>
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
+.my-swipe .van-swipe-item {
+  color: #fff;
+  font-size: 20px;
   line-height: 150px;
-  margin: 0;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+  text-align: center;
+  background-color: #39a9ed;
 }
 </style>
