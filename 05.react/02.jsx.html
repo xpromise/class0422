@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jsx</title>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <!-- react.development.js库向外暴露React -->
+    <script src="./js/react.development.js"></script>
+    <!-- react-dom.development.js库向外暴露ReactDOM -->
+    <script src="./js/react-dom.development.js"></script>
+    <script>
+      // 1. 创建虚拟DOM对象
+      const vDom1 = React.createElement("span", null, "I Like You!");
+
+      const h1 = React.createElement(
+        "h1",
+        { className: "myClass", id: "myId" },
+        vDom1
+      );
+      // 2. 将虚拟DOM对象渲染页面指定容器中
+      ReactDOM.render(h1, document.getElementById("test1"));
+    </script>
+
+    <script src="./js/babel.min.js"></script>
+    <script type="text/babel">
+      /*
+        JSX语法：
+          作用：用来简化创建虚拟DOM对象
+          语法：
+            1. 以<开头，如果是html同名元素，会解析成同名元素，如果不是，会当做组件解析
+            2. （在JSX语法中），以{开头，里面代码会当做JS代码解析
+      */
+      const content = 'I Like You!';
+      const className = 'myClass';
+      
+      const vDom2 = (
+        <h1 className={className} id="myId">
+          <span>{content}</span>
+        </h1>
+      );
+      ReactDOM.render(vDom2, document.getElementById("test2"));
+    </script>
+  </body>
+</html>
