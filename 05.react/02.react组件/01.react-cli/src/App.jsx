@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1 className="red" style={{ fontSize: 50, lineHeight: "50px" }}>
+        <h1 className="color" style={{ fontSize: 50, lineHeight: "50px" }}>
           hello react cli
         </h1>
         {/* 通过组件标签使用组件 */}
