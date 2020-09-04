@@ -12,6 +12,16 @@ export default class App extends Component {
     ],
   };
 
+  id = 3
+
+  addTodo = (content) => {
+    const { todos } = this.state;
+    // 不建议操作（修改）原数据，建议产生一份新数据
+    this.setState({
+      todos: [{id: this.id++, content}, ...todos]
+    })
+  }
+
   render() {
     // 读取state数据
     const { todos } = this.state;
@@ -19,7 +29,7 @@ export default class App extends Component {
     return (
       <div className="todo-container">
         <div className="todo-wrap">
-          <Header />
+          <Header addTodo={this.addTodo}/>
           <List todos={todos}/>
           <Footer />
         </div>
