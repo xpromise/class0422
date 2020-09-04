@@ -12,33 +12,52 @@ export default class App extends Component {
         3. 改变函数的this指向
       现在：基本不用~
     */
-    this.state = {};
   }
 
-  // 根据props来计算生成新state（如果state和props相关）
-  static getDerivedStateFromProps() {
-    console.log("getDerivedStateFromProps");
-    // 返回新状态
-    return {};
+  componentWillMount() {
+    console.log("componentWillMount");
   }
 
-  getSnapshotBeforeUpdate() {
-    // 在真正渲染之前，提前操作DOM
-    console.log("getSnapshotBeforeUpdate");
-    return null;
+  componentDidMount() {
+    /*
+      发送ajax请求
+      设置定时器
+      等一次性任务
+    */
+    console.log("componentDidMount");
+  }
+
+  componentWillReceiveProps() {
+    console.log("componentWillReceiveProps");
+  }
+
+  shouldComponentUpdate() {
+    /*
+      React特定：父组件更新，一定会导致子组件重新渲染
+
+      性能优化：减少组件重复的渲染
+        返回值true就会重新渲染
+        返回值false就不会渲染
+    */
+    console.log("shouldComponentUpdate");
+    return false;
+  }
+
+  componentWillUpdate() {
+    console.log("componentWillUpdate");
   }
 
   componentDidUpdate() {
     console.log("componentDidUpdate");
   }
 
-  shouldComponentUpdate() {
-    console.log("shouldComponentUpdate");
-    return true;
-  }
-
-  componentDidMount() {
-    console.log("componentDidMount");
+  componentWillUnmount() {
+    /*
+      解绑事件
+      清除定时器
+      取消ajax请求...等收尾工作
+    */
+    console.log("componentWillUnmount");
   }
 
   handleClick = () => {
