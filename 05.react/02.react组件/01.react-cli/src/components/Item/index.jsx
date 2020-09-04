@@ -5,6 +5,7 @@ export default class Item extends Component {
   static propTypes = {
     todo: PropTypes.object.isRequired,
     delTodo: PropTypes.func.isRequired,
+    checkTodo: PropTypes.func.isRequired,
   };
 
   state = {
@@ -46,6 +47,10 @@ export default class Item extends Component {
     }
   };
 
+  handleChange = () => {
+    this.props.checkTodo(this.props.todo.id);
+  };
+
   render() {
     const { todo } = this.props;
     const { isDisplay } = this.state;
@@ -56,7 +61,11 @@ export default class Item extends Component {
     return (
       <li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <label>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={todo.isCheck}
+            onChange={this.handleChange}
+          />
           <span>{todo.content}</span>
         </label>
         <button
