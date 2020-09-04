@@ -1,99 +1,81 @@
 import React, { Component } from "react";
-
-import Header from "./components/Header";
-import List from "./components/List";
-import Footer from "./components/Footer";
+import ReactDOM from "react-dom";
 
 export default class App extends Component {
-  state = {
-    todos: [
-      { id: 1, content: "jack~", isCheck: true },
-      { id: 2, content: "rose~", isCheck: false },
-    ],
+  constructor() {
+    super();
+    console.log("constructor");
+    /*
+      过去：
+        1. 初始化state
+        2. 初始化createRef
+        3. 改变函数的this指向
+      现在：基本不用~
+    */
+  }
+
+  componentWillMount() {
+    console.log("componentWillMount");
+  }
+
+  componentDidMount() {
+    /*
+      发送ajax请求
+      设置定时器
+      等一次性任务
+    */
+    console.log("componentDidMount");
+  }
+
+  componentWillReceiveProps() {
+    console.log("componentWillReceiveProps");
+  }
+
+  shouldComponentUpdate() {
+    /*
+      React特定：父组件更新，一定会导致子组件重新渲染
+
+      性能优化：减少组件重复的渲染
+        返回值true就会重新渲染
+        返回值false就不会渲染
+    */
+    console.log("shouldComponentUpdate");
+    return false;
+  }
+
+  componentWillUpdate() {
+    console.log("componentWillUpdate");
+  }
+
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
+  }
+
+  componentWillUnmount() {
+    /*
+      解绑事件
+      清除定时器
+      取消ajax请求...等收尾工作
+    */
+    console.log("componentWillUnmount");
+  }
+
+  handleClick = () => {
+    this.setState({});
+    // this.forceUpdate(() => {});
   };
 
-  id = 3;
-
-  // 添加todo
-  addTodo = (content) => {
-    const { todos } = this.state;
-    // 不建议操作（修改）原数据，建议产生一份新数据
-    this.setState({
-      todos: [{ id: this.id++, content, isCheck: false }, ...todos],
-    });
-  };
-
-  // 删除todo
-  delTodo = (id) => {
-    const { todos } = this.state;
-    // 不建议操作（修改）原数据，建议产生一份新数据
-    this.setState({
-      todos: todos.filter((todo) => todo.id !== id),
-    });
-  };
-
-  // 全选/全不选
-  checkAllTodos = (isCheckAll) => {
-    const { todos } = this.state;
-    // 不建议操作（修改）原数据，建议产生一份新数据
-    this.setState({
-      todos: todos.map((todo) => {
-        return {
-          ...todo,
-          isCheck: isCheckAll,
-        };
-      }),
-    });
-  };
-
-  // 单选
-  checkTodo = (id) => {
-    const { todos } = this.state;
-    // 不建议操作（修改）原数据，建议产生一份新数据
-    this.setState({
-      todos: todos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            isCheck: !todo.isCheck,
-          };
-        }
-        return todo;
-      }),
-    });
+  goDie = () => {
+    ReactDOM.unmountComponentAtNode(document.getElementById("root"));
   };
 
   render() {
-    // 读取state数据
-    const { todos } = this.state;
-
-    // 计算选中的数量
-    const isCheckNum = todos.reduce((p, c) => {
-      return p + (c.isCheck ? 1 : 0);
-    }, 0);
-
-    // todos的总数
-    const total = todos.length;
-
-    // 是否全选
-    const isCheckAll = isCheckNum === total;
-
+    // 返回要渲染的虚拟DOM对象
+    console.log("render");
     return (
-      <div className="todo-container">
-        <div className="todo-wrap">
-          <Header addTodo={this.addTodo} />
-          <List
-            todos={todos}
-            delTodo={this.delTodo}
-            checkTodo={this.checkTodo}
-          />
-          <Footer
-            isCheckAll={isCheckAll}
-            checkAllTodos={this.checkAllTodos}
-            isCheckNum={isCheckNum}
-            total={total}
-          />
-        </div>
+      <div>
+        生命周期 <button onClick={this.handleClick}>更新</button>
+        <button onClick={this.goDie}>go die</button>
       </div>
     );
   }
