@@ -23,7 +23,7 @@ export default class Detail extends Component {
       路由组件有三个属性props：
         location 
           pathname 当前路由路径
-          state 传递参数
+          state 获取编程式导航传递的参数
           search 获取query参数
         history 控制浏览器历史记录
           push / goBack...
