@@ -1,63 +1,66 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+// import axios from "axios";
 
 export default class App extends Component {
-  constructor() {
-    super();
-    console.log("constructor");
-    /*
-      过去：
-        1. 初始化state
-        2. 初始化createRef
-        3. 改变函数的this指向
-      现在：基本不用~
-    */
-    this.state = {};
-  }
-
-  // 根据props来计算生成新state（如果state和props相关）
-  static getDerivedStateFromProps() {
-    console.log("getDerivedStateFromProps");
-    // 返回新状态
-    return {};
-  }
-
-  getSnapshotBeforeUpdate() {
-    // 在真正渲染之前，提前操作DOM
-    console.log("getSnapshotBeforeUpdate");
-    return null;
-  }
-
-  componentDidUpdate() {
-    console.log("componentDidUpdate");
-  }
-
-  shouldComponentUpdate() {
-    console.log("shouldComponentUpdate");
-    return true;
-  }
+  state = {
+    isLoading: false,
+    repo: {},
+  };
 
   componentDidMount() {
-    console.log("componentDidMount");
+    this.setState({
+      isLoading: true,
+    });
+
+    fetch("http://localhost:9527")
+      .then((res) => res.json()) // 转化响应体数据
+      .then((res) => {
+        // console.log(res);
+        const repo = res.items[0];
+        this.setState({
+          isLoading: false,
+          repo: {
+            name: repo.name,
+            url: repo.html_url,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // 发送请求
+    // axios
+    //   .get("https://api.github.com/search/repositories?q=r&sort=stars")
+    //   .then((res) => {
+    //     const repo = res.data.items[0];
+    //     this.setState({
+    //       isLoading: false,
+    //       repo: {
+    //         name: repo.name,
+    //         url: repo.html_url,
+    //       },
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     this.setState({
+    //       isLoading: false,
+    //     });
+    //     alert("请求失败~");
+    //   });
   }
 
-  handleClick = () => {
-    this.setState({});
-    // this.forceUpdate(() => {});
-  };
-
-  goDie = () => {
-    ReactDOM.unmountComponentAtNode(document.getElementById("root"));
-  };
-
   render() {
-    // 返回要渲染的虚拟DOM对象
-    console.log("render");
+    const { isLoading, repo } = this.state;
+
+    if (isLoading) {
+      return <div>loading...</div>;
+    }
+
     return (
-      <div>
-        生命周期 <button onClick={this.handleClick}>更新</button>
-        <button onClick={this.goDie}>go die</button>
-      </div>
+      <h1>
+        most star repo is <a href={repo.url}>{repo.name}</a>
+      </h1>
     );
   }
 }
