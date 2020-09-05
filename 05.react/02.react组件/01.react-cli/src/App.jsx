@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { BrowserRouter, Link, Route, Redirect, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router, // as 重命名
+  Link,
+  NavLink,
+  Route,
+  Redirect,
+  Switch,
+} from "react-router-dom";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -7,7 +14,7 @@ import About from "./pages/About";
 export default class App extends Component {
   render() {
     return (
-      <BrowserRouter>
+      <Router>
         <div className="row">
           <div className="col-xs-offset-2 col-xs-8">
             <div className="page-header">
@@ -22,13 +29,17 @@ export default class App extends Component {
                 Link组件 相当于a标签
                   禁止默认行为：1. 不会跳转网址 2. 不会发送请求
                   只会使用 history.push 跳转
+
+                NavLink 相当于Link组件
+                  多一个选中的默认样式 active  
+                    activeClassName="my-active" 可以改变选中的样式
               */}
-              <Link className="list-group-item" to="/about">
+              <NavLink className="list-group-item" to="/about">
                 About
-              </Link>
-              <Link className="list-group-item" to="/home">
+              </NavLink>
+              <NavLink className="list-group-item" to="/home">
                 Home
-              </Link>
+              </NavLink>
             </div>
           </div>
 
@@ -56,7 +67,7 @@ export default class App extends Component {
             </div>
           </div>
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 }
