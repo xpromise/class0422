@@ -1,34 +1,31 @@
 import React, { Component } from "react";
 
-import Modal from "./Modal";
+import A from "./A";
+import B from "./B";
 
 export default class App extends Component {
   state = {
-    visible: false,
+    count: 1,
   };
 
-  toggle = () => {
+  update = () => {
     this.setState({
-      visible: true,
+      count: this.state.count + 1,
     });
   };
-
-  close = () => {
-    this.setState({
-      visible: false,
-    });
-  }
 
   render() {
     return (
       <div>
-        <h1>App...</h1>
-        <button onClick={this.toggle}>切换显示</button>
+        <button onClick={this.update}>update</button>
 
-        <Modal title="标题~~" visible={this.state.visible} close={this.close}>
-          <h1>hello</h1>
-          <p>Modal</p>
-        </Modal>
+        {/* 适用于：只渲染组件（A组件渲染B组件） */}
+        {/* <A>
+          <B />
+        </A> */}
+
+        {/* 适用于：即渲染组件，同时传递动态数据（A组件渲染B组件） */}
+        <A render={(props) => <B {...props} />} />
       </div>
     );
   }
