@@ -1,13 +1,34 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 import A from "./A";
 import B from "./B";
 
-export default class App extends Component {
+export default class App extends PureComponent {
   state = {
     a: 1,
     b: 2,
   };
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   /*
+  //     判断props中b数据前后是否一致
+  //       如果一致，就不更新 (所有props都相等就不更新 false)
+  //       如果不一样，才需要更新 （只要有一个不相等，就要更新 true）
+  //   */
+  //   // console.log(this.props); // 上一次的props 还未更新的props
+  //   // console.log(nextProps); // 最新的props
+
+  //   const stateKeys = Object.keys(nextState);
+
+  //   for (let j = 0; j < stateKeys.length; j++) {
+  //     const key = stateKeys[j];
+  //     if (this.state[key] !== stateKeys[key]) {
+  //       return true; // 更新
+  //     }
+  //   }
+
+  //   return false; // 不更新
+  // }
 
   handleAClick = () => {
     this.setState({
