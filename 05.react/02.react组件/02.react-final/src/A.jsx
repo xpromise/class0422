@@ -1,42 +1,22 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 
-export default class A extends PureComponent {
-  static propTypes = {
-    a: PropTypes.number.isRequired,
-  };
+/*
+  工厂函数组件没有this（没有state/refs）
+  没有生命周期函数
+*/
+// export default function A(props) {
+//   // console.log(this);
+//   console.log(props); // {name: "jack"}
+//   return <div>A...</div>;
+// }
 
-  // 优先级更高
-  // shouldComponentUpdate(nextProps) {
-  //   /*
-  //     判断props中b数据前后是否一致
-  //       如果一致，就不更新 (所有props都相等就不更新 false)
-  //       如果不一样，才需要更新 （只要有一个不相等，就要更新 true）
-  //   */
-  //   // console.log(this.props); // 上一次的props 还未更新的props
-  //   // console.log(nextProps); // 最新的props
+/*
+  React.forwardRef()会返回一个组件
+  props 组件接受的props
+  ref 组件设置ref属性
+*/
+export default React.forwardRef((props, ref) => {
+  console.log(props);
 
-  //   const keys = Object.keys(nextProps);
-
-  //   for (let i = 0; i < keys.length; i++) {
-  //     const key = keys[i];
-  //     if (this.props[key] !== nextProps[key]) {
-  //       return true; // 更新
-  //     }
-  //   }
-
-
-  //   return false; // 不更新
-  // }
-
-  render() {
-    console.log('A组件 render');
-
-    return (
-      <div>
-        <h2>A...</h2>
-        <p>数据a: {this.props.a}</p>
-      </div>
-    );
-  }
-}
+  return <div ref={ref}>A...</div>;
+});
