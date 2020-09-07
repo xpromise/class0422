@@ -1,24 +1,39 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
-import Father from "./Father";
-
-import nameContext from "./context/nameContext";
-
-const { Provider } = nameContext;
+import A from "./A";
+import B from "./B";
 
 export default class App extends Component {
   state = {
-    name: "jack",
+    a: 1,
+    b: 2,
+  };
+
+  handleAClick = () => {
+    this.setState({
+      a: this.state.a + 1,
+    });
+  };
+  
+  handleBClick = () => {
+    this.setState({
+      b: this.state.b + 1,
+    });
   };
 
   render() {
+    console.log("App组件 render");
+
+    const { a, b } = this.state;
+
     return (
-      <Fragment>
+      <div>
         <h1>App...</h1>
-        <Provider value={this.state.name}>
-          <Father />
-        </Provider>
-      </Fragment>
+        <button onClick={this.handleAClick}>更新a数据</button>
+        <button onClick={this.handleBClick}>更新b数据</button>
+        <A a={a} />
+        <B b={b} />
+      </div>
     );
   }
 }
