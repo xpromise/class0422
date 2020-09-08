@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Button } from "antd-mobile";
+import { Button, Toast } from "antd-mobile";
 
 export default class App extends Component {
   handleClick = () => {
-    message.success("提示~~~", 10);
+    Toast.success("成功了~");
   };
 
   render() {
