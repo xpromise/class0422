@@ -4,19 +4,24 @@
 */
 import { INCREMENT, DECREMENT } from "./constants";
 
-// function increment(data) {
-//   return {
-//     type: "INCREMENT",
-//     data,
-//   };
-// }
-
+/*
+  分为同步action和异步action
+    同步action：返回值是一个action对象
+    异步action：返回值是一个函数，执行函数时发送请求
+*/
 export const increment = (data) => ({ type: INCREMENT, data });
 export const decrement = (data) => ({ type: DECREMENT, data });
 
-// function decrement(data) {
-//   return {
-//     type: "DECREMENT",
-//     data,
-//   };
-// }
+export const incrementAsync = (data) => {
+  return (dispatch) => {
+    // dispatch 就是 store.dispatch 用来触发更新的方法
+    // 发送请求
+    setTimeout(() => {
+      // 请求成功
+      // 更新redux数据
+      const action = increment(data);
+      dispatch(action);
+    }, 1000)
+  }
+}
+

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { increment, decrement, incrementAsync } from "./redux/actions";
+import { increment, decrement } from "./redux/actions";
 
 class App extends Component {
   state = {
@@ -30,7 +30,9 @@ class App extends Component {
   };
 
   incrementIfAsync = () => {
-    this.props.incrementAsync(this.state.num)
+    setTimeout(() => {
+      this.props.increment(this.state.num);
+    }, 1000);
   };
 
   // connect内部实现了当redux数据发生变化，重新渲染组件
@@ -113,5 +115,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect((state) => ({ count: state }), {
   increment,
   decrement,
-  incrementAsync
 })(App);
