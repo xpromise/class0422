@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>canvas</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #canvas {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="350" height="400"></canvas>
+    <script>
+      // 获取画布
+      const canvas = document.getElementById("canvas");
+      // 获取画笔
+      const ctx = canvas.getContext("2d");
+      console.log(ctx);
+
+      ctx.fillStyle = "pink"; // 填充的颜色
+      // 开始绘画
+      ctx.beginPath();
+
+      // 画圆
+      ctx.arc(100, 100, 50, 0, 2 * Math.PI, true);
+
+      // 画矩形
+      // ctx.rect(50, 50, 100, 50);
+      // 填充
+      // ctx.fill();
+
+      ctx.stroke();
+
+      // 移动起始坐标
+      // ctx.moveTo(50, 50);
+      // 指定线的终点坐标
+      // ctx.lineTo(200, 200);
+      // ctx.lineTo(200, 50);
+      // ctx.lineTo(50, 50);
+      // 连线
+      // ctx.stroke();
+    </script>
+  </body>
+</html>
