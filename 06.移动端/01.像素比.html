@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #box {
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+      }
+      /* 通过css方式获取 */
+      @media (-webkit-min-device-pixel-ratio: 2) {
+        /* 判断当前屏幕像素比是否是2 */
+        #box {
+          width: 200px;
+          height: 200px;
+        }
+      }
+      @media (-webkit-min-device-pixel-ratio: 3) {
+        /* 判断当前屏幕像素比是否是3 */
+        #box {
+          width: 300px;
+          height: 300px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box"></div>
+    <script>
+      // 通过JS获取
+      console.log(window.devicePixelRatio);
+    </script>
+  </body>
+</html>
