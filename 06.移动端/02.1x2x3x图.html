@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片处理</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .logo {
+        width: 200px;
+        height: 200px;
+        background-image: url("./images/logo.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      @media (-webkit-min-device-pixel-ratio: 2) {
+        .logo {
+          background-image: url("./images/logo@2x.png");
+        }
+      }
+      @media (-webkit-min-device-pixel-ratio: 3) {
+        .logo {
+          background-image: url("./images/logo@3x.png");
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="logo"></h1>
+  </body>
+</html>

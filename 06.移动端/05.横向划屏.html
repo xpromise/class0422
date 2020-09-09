@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>横向滑屏</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        position: relative;
+        height: 100%;
+        /* 禁止横向滚动条 */
+        overflow-x: hidden;
+      }
+      .list {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 400%;
+        list-style: none;
+      }
+      .list li {
+        float: left;
+        width: 25%;
+        height: 200px;
+      }
+      .list li:nth-child(1) {
+        background-color: pink;
+      }
+      .list li:nth-child(2) {
+        background-color: yellowgreen;
+      }
+      .list li:nth-child(3) {
+        background-color: skyblue;
+      }
+      .list li:nth-child(4) {
+        background-color: #bfa;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="list">
+      <li>111</li>
+      <li>222</li>
+      <li>333</li>
+      <li>444</li>
+    </ul>
+    <script>
+      const list = document.querySelector(".list");
+      /*
+        划屏事件触发：先触发touchstart，再触发touchmove
+          touchmove位置- touchstart的位置
+          如果值小于0，说明用户向左滑，ul向左移动，left递减
+          如果值大于0，说明用户向右滑，ul向右移动，left递增
+      */
+      const listWidth = list.clientWidth; // ul的宽度
+      const clientWidth = document.documentElement.clientWidth; // 屏幕的宽度
+      // 初始化位置（起始位置）
+      let startX = 0;
+      // ul的初始化位置
+      let offsetX = 0;
+
+      const speed = 10; // 滑屏的速度
+
+      list.addEventListener("touchstart", function (e) {
+        // console.log(e);
+        // touchstart的位置
+        const { clientX } = e.targetTouches[0];
+        // 手指开始位置
+        startX = clientX;
+        // ul的开始位置
+        offsetX = list.offsetLeft;
+      });
+
+      list.addEventListener("touchmove", function (e) {
+        // touchmove位置
+        const { clientX } = e.targetTouches[0];
+        // 相对距离
+        const distance = clientX - startX;
+
+        if (distance < 0) {
+          if (offsetX <= clientWidth - listWidth) return;
+          list.style.left = offsetX - speed + "px";
+        } else {
+          // list位置不能
+          if (offsetX >= 0) return;
+          list.style.left = offsetX + speed + "px";
+        }
+
+        // 同步开始位置
+        // 手指开始位置
+        startX = clientX;
+        // ul的开始位置
+        offsetX = list.offsetLeft;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .box {
+        width: 100%;
+        height: 200px;
+        background-color: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <script>
+      const box = document.querySelector(".box");
+
+      box.addEventListener("touchstart", function (e) {
+        console.log("touchstart");
+        
+
+      });
+
+      box.addEventListener("touchmove", function (e) {
+        console.log("touchmove");
+        console.log(e);
+      });
+
+      box.addEventListener("touchend", function () {
+        console.log("touchend");
+      });
+    </script>
+  </body>
+</html>
