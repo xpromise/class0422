@@ -17,6 +17,8 @@
         height: 100%;
       }
       .outer {
+        position: relative;
+        z-index: 99;
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.4);
@@ -49,12 +51,10 @@
     </script>
   </head>
   <body>
-    <div class="outer">
-      <div class="inner">
-        <a href="http://www.atguigu.com">硅谷</a>
-      </div>
-      <p class="outer-text"></p>
-      <p class="inner-text"></p>
+    <div class="outer"></div>
+
+    <div class="inner">
+      <a href="http://www.atguigu.com">硅谷</a>
     </div>
     <script>
       const outer = document.querySelector(".outer");
@@ -62,6 +62,15 @@
       const allA = document.querySelectorAll("a");
       const outerText = document.querySelector(".outer-text");
       const innerText = document.querySelector(".inner-text");
+
+      /*
+        什么是事件点透：
+          根本原因：click事件在移动端会延迟300ms触发
+          移动端：点击Modal对话框组件消失时会触发下一层组件点击事件
+        解决方案：
+          fastclick，引入库解决
+          原理：禁止所有标签的默认行为，给a标签绑定touchend事件跳转网址  
+      */
 
       // 统一设置 问题：a标签不能点击了
       // document.addEventListener(
@@ -89,12 +98,11 @@
       outer.addEventListener("touchstart", function (e) {
         console.log("outer touchstart点击了~");
         // e.stopPropagation(); // 阻止冒泡 没有效果
-        outerText.innerText = "outer touchstart点击了~";
+        this.style.display = "none";
       });
 
       inner.addEventListener("click", function () {
         console.log("inner click点击了~");
-        innerText.innerText = "inner click点击了~";
       });
     </script>
   </body>
