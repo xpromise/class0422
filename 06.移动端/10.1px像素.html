@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>1px</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .line {
+        margin-top: 100px;
+        height: 1px;
+        width: 100%;
+        background-color: #000;
+      }
+      @media (-webkit-min-device-pixel-ratio: 2) {
+        .line {
+          transform: scaleY(0.5);
+          /* 兼容性不好，有些设备不识别小数点单位 */
+          /* height: 0.5px; */
+        }
+      }
+      @media (-webkit-min-device-pixel-ratio: 3) {
+        .line {
+          transform: scaleY(0.33333333);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="line"></div>
+  </body>
+</html>
