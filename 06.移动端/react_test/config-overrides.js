@@ -15,5 +15,13 @@ module.exports = override(
   }),
   // px2rem
   // postcss-px2rem
-  addPostcssPlugins([require("postcss-px2rem")({ remUnit: 3.75 })])
+  // addPostcssPlugins([require("postcss-px2rem")({ remUnit: 3.75 })])
+  
+  //postcss-px-to-viewport
+  addPostcssPlugins([
+    require("postcss-px-to-viewport")({
+      viewportWidth: 375, // 视口宽度
+      unitPrecision: 3, // 精度，小数点位数
+    }),
+  ])
 );

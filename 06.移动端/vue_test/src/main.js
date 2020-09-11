@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 // import "./rem";
-import "./flexible";
+// import "./flexible";
 
 Vue.config.productionTip = false;
 
