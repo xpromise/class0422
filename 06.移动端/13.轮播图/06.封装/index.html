@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>轮播图</title>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="./imgs/1.jpg" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./imgs/2.jpg" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./imgs/3.jpg" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./imgs/4.jpg" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./imgs/5.jpg" />
+        </div>
+      </div>
+      <div class="pagination"></div>
+      <script src="./js/index.js"></script>
+      <script>
+        new Swiper(".swiper-container", {
+          // loop: true, // 无缝轮播
+          // autoplay: true, // 自动轮播
+          pagination: {
+            el: ".pagination",
+          },
+        });
+      </script>
+    </div>
+  </body>
+</html>
