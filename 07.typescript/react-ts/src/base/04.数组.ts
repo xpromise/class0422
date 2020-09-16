@@ -33,12 +33,13 @@ function reverse(x: number | string): number | string {
 reverse(123);
 
 // 重载
+type numOrStr = number | string;
 function reverse1(x: number): number;
 function reverse1(x: string): string;
-function reverse1(x: number | string): number | string {
+function reverse1(x: numOrStr): numOrStr {
   if (typeof x === "number") {
     return Number(x.toString().split("").reverse().join(""));
-  } else if (typeof x === "string") {
+  } else {
     return x.split("").reverse().join("");
   }
 }
